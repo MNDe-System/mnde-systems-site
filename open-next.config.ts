@@ -1,5 +1,3 @@
 export default {
-  cloudflare: {
-    output: "standalone"
-  }
+  cloudflare: {}
 };
