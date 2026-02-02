@@ -1,5 +1,12 @@
 import Calculator from "@/components/Calculator";
 import ContactForm from "@/components/ContactForm";
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "MNDe Systems",
+  description: "Deterministic control for irreversible execution"
+}
+
 
 export default function Home() {
   return (
