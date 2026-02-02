@@ -1,25 +1,30 @@
-import { Resend } from "resend";
-import { NextResponse } from "next/server";
+import { NextResponse } from "next/server"
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+export const runtime = "edge"
 
 export async function POST(req: Request) {
   try {
-    const { name, company, role, email, environment, message } = await req.json();
+    const { name, company, role, email, environment, message } = await req.json()
 
     if (!name || !email || !message) {
       return NextResponse.json(
         { error: "Missing required fields" },
         { status: 400 }
-      );
+      )
     }
 
-    const { data, error } = await resend.emails.send({
-      from: "MNDe Systems <onboarding@resend.dev>",
-      to: ["MNDeproject@proton.me"],
-      subject: `New inquiry from ${name}`,
-      replyTo: email,
-      text: `
+    const res = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${process.env.RESEND_API_KEY}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        from: "MNDe Systems <onboarding@resend.dev>",
+        to: ["MNDeproject@proton.me"],
+        reply_to: email,
+        subject: `New inquiry from ${name}`,
+        text: `
 Name: ${name}
 Company: ${company || "N/A"}
 Role: ${role || "N/A"}
@@ -28,20 +33,20 @@ Environment: ${environment}
 
 Message:
 ${message}
-      `,
-    });
+        `,
+      }),
+    })
 
-    if (error) {
-      console.error("Resend error:", error);
-      return NextResponse.json({ error }, { status: 500 });
+    if (!res.ok) {
+      const err = await res.text()
+      return NextResponse.json({ error: err }, { status: 500 })
     }
 
-    return NextResponse.json({ success: true, data });
-  } catch (err) {
-    console.error("API error:", err);
+    return NextResponse.json({ success: true })
+  } catch {
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }
-    );
+    )
   }
 }
