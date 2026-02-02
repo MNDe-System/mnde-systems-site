@@ -1,6 +1,7 @@
+import { Resend } from "resend"
 import { NextResponse } from "next/server"
 
-export const runtime = "edge"
+const resend = new Resend(process.env.RESEND_API_KEY)
 
 export async function POST(req: Request) {
   try {
@@ -13,37 +14,31 @@ export async function POST(req: Request) {
       )
     }
 
-    const res = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${process.env.RESEND_API_KEY}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        from: "MNDe Systems <onboarding@resend.dev>",
-        to: ["MNDeproject@proton.me"],
-        reply_to: email,
-        subject: `New inquiry from ${name}`,
-        text: `
+    const { error } = await resend.emails.send({
+      from: "MNDe Systems <contact@mndesystems.com>",
+      to: ["MNDeproject@proton.me"],
+      replyTo: email,
+      subject: `New inquiry from ${name}`,
+      text: `
 Name: ${name}
 Company: ${company || "N/A"}
 Role: ${role || "N/A"}
 Email: ${email}
-Environment: ${environment}
+Environment: ${environment || "N/A"}
 
 Message:
 ${message}
-        `,
-      }),
+      `,
     })
 
-    if (!res.ok) {
-      const err = await res.text()
-      return NextResponse.json({ error: err }, { status: 500 })
+    if (error) {
+      console.error("Resend error:", error)
+      return NextResponse.json({ error }, { status: 500 })
     }
 
     return NextResponse.json({ success: true })
-  } catch {
+  } catch (err) {
+    console.error("API error:", err)
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }
