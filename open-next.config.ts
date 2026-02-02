@@ -1,5 +1,5 @@
-import { defineConfig } from "@opennextjs/cloudflare";
+const config = {
+  output: "standalone"
+};
 
-export default defineConfig({
-output: "standalone"
-});
+export default config;
