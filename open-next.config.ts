@@ -1,5 +1,5 @@
-const config = {
-  output: "standalone"
+export default {
+  cloudflare: {
+    output: "standalone"
+  }
 };
-
-export default config;
