@@ -1,6 +1,3 @@
-export const runtime = "nodejs"
-
-
 import { Resend } from "resend"
 import { NextResponse } from "next/server"
 
@@ -17,7 +14,7 @@ export async function POST(req: Request) {
       )
     }
 
-    const result = await resend.emails.send({
+    const { error } = await resend.emails.send({
       from: "MNDe Systems <contact@mndesystems.com>",
       to: ["mndeproject@proton.me"],
       replyTo: email,
@@ -32,8 +29,7 @@ Message:
 ${message}`,
     })
 
-    if (result.error) {
-      console.error("Resend error:", result.error)
+    if (error) {
       return NextResponse.json(
         { error: "Email send failed" },
         { status: 500 }
@@ -41,8 +37,7 @@ ${message}`,
     }
 
     return NextResponse.json({ ok: true })
-  } catch (err) {
-    console.error("API error:", err)
+  } catch {
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }
