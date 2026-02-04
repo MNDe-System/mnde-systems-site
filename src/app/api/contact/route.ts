@@ -37,7 +37,7 @@ ${message}`,
       )
     }
 
-    return NextResponse.json({ success: true })
+    return NextResponse.json({ ok: true })
   } catch (err) {
     console.error("API error:", err)
     return NextResponse.json(
