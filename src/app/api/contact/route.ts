@@ -14,26 +14,27 @@ export async function POST(req: Request) {
       )
     }
 
-    const { error } = await resend.emails.send({
+    const result = await resend.emails.send({
       from: "MNDe Systems <contact@mndesystems.com>",
-      to: [mndeproject@proton.me"],
+      to: ["mndeproject@proton.me"],
       replyTo: email,
       subject: `New inquiry from ${name}`,
-      text: `
-Name: ${name}
+      text: `Name: ${name}
 Company: ${company || "N/A"}
 Role: ${role || "N/A"}
 Email: ${email}
 Environment: ${environment || "N/A"}
 
 Message:
-${message}
-      `,
+${message}`,
     })
 
-    if (error) {
-      console.error("Resend error:", error)
-      return NextResponse.json({ error }, { status: 500 })
+    if (result.error) {
+      console.error("Resend error:", result.error)
+      return NextResponse.json(
+        { error: "Email send failed" },
+        { status: 500 }
+      )
     }
 
     return NextResponse.json({ success: true })
