@@ -1,19 +1,16 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from "next"
 
 const nextConfig: NextConfig = {
-output: "export",
+  output: "standalone",
 
-images: {
-unoptimized: true
-},
+  experimental: {
+    outputFileTracingRoot: process.cwd()
+  },
 
-typescript: {
-ignoreBuildErrors: true
-},
-
-eslint: {
-ignoreDuringBuilds: true
+  webpack: (config) => {
+    config.cache = false
+    return config
+  }
 }
-};
 
-export default nextConfig;
+export default nextConfig
