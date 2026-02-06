@@ -1,4 +1,5 @@
-
+import type { Metadata } from "next"
+import type { ReactNode } from "react"
 import "./globals.css"
 import Script from "next/script"
 
@@ -11,9 +12,9 @@ export const metadata: Metadata = {
 }
 
 export default function RootLayout({
-  children,
+  children
 }: {
-  children: React.ReactNode
+  children: ReactNode
 }) {
   return (
     <html lang="en">
@@ -24,7 +25,6 @@ export default function RootLayout({
           strategy="afterInteractive"
           data-orchids-project-id="f8396d68-c913-4e83-acea-977ed7b68cf1"
         />
-
         {children}
       </body>
     </html>
