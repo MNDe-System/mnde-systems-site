@@ -1,15 +1,17 @@
-import { Resend } from "resend"
 import { NextResponse } from "next/server"
-
-const resend = new Resend(process.env.RESEND_API_KEY)
+import { Resend } from "resend"
 
 export async function POST(req: Request) {
-  if (!process.env.RESEND_API_KEY) {
+  const apiKey = process.env.RESEND_API_KEY
+
+  if (!apiKey) {
     return NextResponse.json(
       { error: "RESEND_API_KEY missing" },
       { status: 500 }
     )
   }
+
+  const resend = new Resend(apiKey)
 
   try {
     const {
@@ -18,7 +20,7 @@ export async function POST(req: Request) {
       role,
       email,
       environment,
-      message
+      message,
     } = await req.json()
 
     if (!name || !email || !message) {
@@ -40,7 +42,7 @@ Email: ${email}
 Environment: ${environment || "N/A"}
 
 Message:
-${message}`
+${message}`,
     })
 
     if (error) {
