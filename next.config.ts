@@ -1,17 +1,10 @@
 import type { NextConfig } from "next"
 
 const nextConfig: NextConfig = {
-  output: "standalone",
-
-  outputFileTracingRoot: process.cwd(),
+  output: "export",
 
   eslint: {
     ignoreDuringBuilds: true
-  },
-
-  webpack: (config) => {
-    config.cache = false
-    return config
   }
 }
 
