@@ -1,2 +1,4 @@
 name = "mnde-systems-site"
 pages_build_output_dir = "out"
+
+compatibility_flags = ["nodejs_compat"]
