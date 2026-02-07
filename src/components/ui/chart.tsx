@@ -1,54 +1,54 @@
 "use client"
 
 import * as React from "react"
-import * as RechartsPrimitive from "recharts"
-import type { TooltipProps } from "recharts"
-
+import * as Recharts from "recharts"
 import { cn } from "@/lib/utils"
 
-/* -------------------- theme -------------------- */
+/* =======================
+   Theme
+======================= */
 
 const THEMES = { light: "", dark: ".dark" } as const
 
 export type ChartConfig = {
-  [k in string]: {
+  [k: string]: {
     label?: React.ReactNode
     icon?: React.ComponentType
-  } & (
-    | { color?: string; theme?: never }
-    | { color?: never; theme: Record<keyof typeof THEMES, string> }
-  )
+    color?: string
+  }
 }
 
-/* -------------------- context -------------------- */
+/* =======================
+   Context
+======================= */
 
-type ChartContextProps = {
+type ChartContextValue = {
   config: ChartConfig
 }
 
-const ChartContext = React.createContext<ChartContextProps | null>(null)
+const ChartContext = React.createContext<ChartContextValue | null>(null)
 
 function useChart() {
   const ctx = React.useContext(ChartContext)
   if (!ctx) {
-    throw new Error("useChart must be used within ChartContainer")
+    throw new Error("Chart components must be wrapped in <ChartContainer>")
   }
   return ctx
 }
 
-/* -------------------- container -------------------- */
+/* =======================
+   Container
+======================= */
 
-function ChartContainer({
+export function ChartContainer({
   id,
-  className,
-  children,
   config,
+  children,
+  className,
   ...props
 }: React.ComponentProps<"div"> & {
   config: ChartConfig
-  children: React.ComponentProps<
-    typeof RechartsPrimitive.ResponsiveContainer
-  >["children"]
+  children: React.ReactNode
 }) {
   const uid = React.useId()
   const chartId = `chart-${id || uid.replace(/:/g, "")}`
@@ -61,36 +61,32 @@ function ChartContainer({
         {...props}
       >
         <ChartStyle id={chartId} config={config} />
-        <RechartsPrimitive.ResponsiveContainer>
+        <Recharts.ResponsiveContainer>
           {children}
-        </RechartsPrimitive.ResponsiveContainer>
+        </Recharts.ResponsiveContainer>
       </div>
     </ChartContext.Provider>
   )
 }
 
-/* -------------------- style -------------------- */
+/* =======================
+   Style Injection
+======================= */
 
 function ChartStyle({ id, config }: { id: string; config: ChartConfig }) {
-  const colorConfig = Object.entries(config).filter(
-    ([, c]) => c.color || c.theme
-  )
+  const entries = Object.entries(config).filter(([, v]) => v.color)
 
-  if (!colorConfig.length) return null
+  if (!entries.length) return null
 
   return (
     <style
       dangerouslySetInnerHTML={{
         __html: Object.entries(THEMES)
           .map(
-            ([theme, prefix]) => `
+            ([, prefix]) => `
 ${prefix} [data-chart=${id}] {
-${colorConfig
-  .map(([key, c]) => {
-    const color =
-      c.theme?.[theme as keyof typeof c.theme] || c.color
-    return color ? `  --color-${key}: ${color};` : ""
-  })
+${entries
+  .map(([key, v]) => `  --color-${key}: ${v.color};`)
   .join("\n")}
 }
 `
@@ -101,37 +97,31 @@ ${colorConfig
   )
 }
 
-/* -------------------- tooltip -------------------- */
+/* =======================
+   Tooltip
+======================= */
 
-const ChartTooltip = RechartsPrimitive.Tooltip
+export const ChartTooltip = Recharts.Tooltip
 
-function ChartTooltipContent(
-  props: TooltipProps<number, string> &
-    React.ComponentProps<"div"> & {
-      nameKey?: string
-    }
-) {
-  const { active, payload, className, nameKey } = props
+export function ChartTooltipContent(props: any) {
+  const { active, payload, className } = props
   const { config } = useChart()
 
-  if (!active || !payload?.length) return null
+  if (!active || !payload || !payload.length) return null
 
   return (
-    <div className={cn("rounded-lg border bg-background p-2 text-xs", className)}>
-      {payload.map((item) => {
-        const key = `${nameKey || item.dataKey || "value"}`
-        const itemConfig = getPayloadConfigFromPayload(config, item, key)
+    <div className={cn("rounded border bg-background p-2 text-xs", className)}>
+      {payload.map((item: any, i: number) => {
+        const key = item.dataKey || item.name
+        const cfg = config[key]
 
         return (
-          <div
-            key={item.dataKey}
-            className="flex items-center justify-between gap-2"
-          >
+          <div key={i} className="flex justify-between gap-2">
             <span className="text-muted-foreground">
-              {itemConfig?.label || item.name}
+              {cfg?.label || item.name}
             </span>
-            <span className="font-mono tabular-nums">
-              {item.value?.toLocaleString()}
+            <span className="font-mono">
+              {item.value?.toLocaleString?.() ?? item.value}
             </span>
           </div>
         )
@@ -140,24 +130,22 @@ function ChartTooltipContent(
   )
 }
 
-/* -------------------- legend -------------------- */
+/* =======================
+   Legend
+======================= */
 
-const ChartLegend = RechartsPrimitive.Legend
+export const ChartLegend = Recharts.Legend
 
-function ChartLegendContent({
-  className,
-  payload,
-}: React.ComponentProps<"div"> &
-  Pick<RechartsPrimitive.LegendProps, "payload">) {
+export function ChartLegendContent(props: any) {
+  const { payload, className } = props
   const { config } = useChart()
 
-  if (!payload?.length) return null
+  if (!payload || !payload.length) return null
 
   return (
     <div className={cn("flex gap-4", className)}>
-      {payload.map((item) => {
-        const key = `${item.dataKey || "value"}`
-        const itemConfig = getPayloadConfigFromPayload(config, item, key)
+      {payload.map((item: any) => {
+        const cfg = config[item.dataKey]
 
         return (
           <div key={item.value} className="flex items-center gap-1.5">
@@ -165,41 +153,10 @@ function ChartLegendContent({
               className="h-2 w-2 rounded-sm"
               style={{ backgroundColor: item.color }}
             />
-            <span>{itemConfig?.label}</span>
+            <span>{cfg?.label}</span>
           </div>
         )
       })}
     </div>
   )
-}
-
-/* -------------------- helpers -------------------- */
-
-function getPayloadConfigFromPayload(
-  config: ChartConfig,
-  payload: unknown,
-  key: string
-) {
-  if (typeof payload !== "object" || payload === null) return undefined
-
-  const p = payload as Record<string, unknown>
-
-  if (typeof p[key] === "string" && p[key] in config) {
-    return config[p[key] as string]
-  }
-
-  if (key in config) return config[key]
-
-  return undefined
-}
-
-/* -------------------- exports -------------------- */
-
-export {
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-  ChartLegend,
-  ChartLegendContent,
-  ChartStyle,
 }
