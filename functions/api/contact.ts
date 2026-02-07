@@ -1,4 +1,15 @@
-export async function onRequestPost({ request, env }) {
+type Env = {
+  RESEND_API_KEY: string
+}
+
+type Context = {
+  request: Request
+  env: Env
+}
+
+export async function onRequestPost(context: Context): Promise<Response> {
+  const { request, env } = context
+
   if (!env.RESEND_API_KEY) {
     return new Response(
       JSON.stringify({ error: "RESEND_API_KEY missing" }),
@@ -6,7 +17,7 @@ export async function onRequestPost({ request, env }) {
     )
   }
 
-  let payload
+  let payload: any
   try {
     payload = await request.json()
   } catch {
