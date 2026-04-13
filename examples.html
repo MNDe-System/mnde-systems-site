@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Examples of what MNDe Systems stops before runtime: runaway jobs, infinite retries, and malformed requests."
+    />
+    <title>Examples | MNDe Systems</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/css/site.css" />
+    <script defer src="assets/js/analytics.js"></script>
+    <script defer src="assets/js/site.js"></script>
+  </head>
+  <body data-page="examples">
+    <div class="site-shell">
+      <header class="site-header" data-include="header"></header>
+      <main class="page-main">
+        <section class="page-hero">
+          <div class="container reveal">
+            <p class="eyebrow">Examples</p>
+            <h1>What gets stopped</h1>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="container">
+            <div class="examples-grid">
+              <article class="example-card reveal">
+                <div class="example-header">
+                  <p class="eyebrow">Example 1</p>
+                  <h2>Runaway training job</h2>
+                </div>
+                <div class="example-detail">
+                  <span>Input summary</span>
+                  <p>Training request asks for 16 GPUs on a policy that allows 8.</p>
+                </div>
+                <div class="example-detail">
+                  <span>Decision</span>
+                  <p>Refused before allocation</p>
+                </div>
+                <div class="example-detail">
+                  <span>Reason</span>
+                  <p>Requested GPUs exceed policy</p>
+                </div>
+                <div class="example-impact">
+                  <span>Cost prevented</span>
+                  <strong>$14,400</strong>
+                </div>
+              </article>
+
+              <article class="example-card reveal delay-1">
+                <div class="example-header">
+                  <p class="eyebrow">Example 2</p>
+                  <h2>Infinite retry loop</h2>
+                </div>
+                <div class="example-detail">
+                  <span>Input summary</span>
+                  <p>Job request arrives with retry_count set above the approved retry ceiling.</p>
+                </div>
+                <div class="example-detail">
+                  <span>Decision</span>
+                  <p>Refused before additional execution</p>
+                </div>
+                <div class="example-detail">
+                  <span>Reason</span>
+                  <p>Retry count exceeds limit</p>
+                </div>
+              </article>
+
+              <article class="example-card reveal delay-2">
+                <div class="example-header">
+                  <p class="eyebrow">Example 3</p>
+                  <h2>Malformed request</h2>
+                </div>
+                <div class="example-detail">
+                  <span>Input summary</span>
+                  <p>Request payload contains extra parameters outside the accepted schema.</p>
+                </div>
+                <div class="example-detail">
+                  <span>Decision</span>
+                  <p>Rejected at Preflight</p>
+                </div>
+                <div class="example-detail">
+                  <span>Reason</span>
+                  <p>Unknown fields present</p>
+                </div>
+              </article>
+            </div>
+          </div>
+        </section>
+      </main>
+      <footer class="site-footer" data-include="footer"></footer>
+    </div>
+  </body>
+</html>

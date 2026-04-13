@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="MNDe Systems is a deterministic execution control layer that decides what runs before runtime and produces signed, replayable decisions."
+    />
+    <title>MNDe Systems | Execution without proof is risk.</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/css/site.css" />
+    <script defer src="assets/js/analytics.js"></script>
+    <script defer src="assets/js/site.js"></script>
+  </head>
+  <body data-page="home">
+    <div class="site-shell">
+      <header class="site-header" data-include="header"></header>
+      <main>
+        <section class="hero">
+          <div class="container hero-grid">
+            <div class="hero-copy reveal">
+              <p class="eyebrow">MNDe Systems</p>
+              <h1>Execution without proof is risk.</h1>
+              <p class="hero-text">
+                MNDe sits before runtime and makes a deterministic allow or refuse decision. Every decision is signed, replayable, and bound to the exact input and policy.
+              </p>
+              <div class="hero-actions">
+                <a class="button button-primary" href="proof.html">View Proof</a>
+                <a class="button button-secondary" href="how-it-works.html">See How It Works</a>
+              </div>
+            </div>
+            <aside class="hero-panel reveal delay-1" aria-label="Execution summary">
+              <div class="panel-label">Decision Envelope</div>
+              <div class="terminal-line"><span>request_hash</span><strong>sha256:canonical</strong></div>
+              <div class="terminal-line"><span>policy_hash</span><strong>sha256:policy</strong></div>
+              <div class="terminal-line"><span>decision</span><strong class="status-allow">ALLOW</strong></div>
+              <div class="terminal-line"><span>signature</span><strong>ed25519:signed</strong></div>
+              <div class="terminal-line"><span>replay</span><strong>stable</strong></div>
+            </aside>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="container">
+            <div class="section-heading reveal">
+              <p class="eyebrow">What this is</p>
+              <h2>MNDe is a control layer. It does not observe. It does not alert.</h2>
+            </div>
+            <div class="content-grid reveal delay-1">
+              <div class="copy-block">
+                <p>It decides before execution happens.</p>
+                <p>Every request is normalized, evaluated, and either allowed or refused.</p>
+                <p>No silent failures. No drift. No ambiguity.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section section-muted">
+          <div class="container">
+            <div class="section-heading reveal">
+              <p class="eyebrow">Why it matters</p>
+              <h2>Most systems detect problems after they happen.</h2>
+            </div>
+            <div class="card-grid card-grid-3 reveal delay-1">
+              <article class="card">
+                <p>Runaway jobs cost money.</p>
+              </article>
+              <article class="card">
+                <p>Retries spiral.</p>
+              </article>
+              <article class="card">
+                <p>Policies get bypassed across code paths.</p>
+              </article>
+            </div>
+            <p class="section-statement reveal delay-2">MNDe prevents them before they start.</p>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="container">
+            <div class="section-heading reveal">
+              <p class="eyebrow">Core stack</p>
+              <h2>Four layers. One decision boundary.</h2>
+            </div>
+            <div class="stack-list reveal delay-1">
+              <article class="stack-item">
+                <h3>Preflight</h3>
+                <p>Normalizes input. Rejects malformed or unknown fields.</p>
+              </article>
+              <article class="stack-item">
+                <h3>Orbit</h3>
+                <p>Carries enforcement across every execution path.</p>
+              </article>
+              <article class="stack-item">
+                <h3>ARM</h3>
+                <p>Calculates cost, scope, and limits before runtime.</p>
+              </article>
+              <article class="stack-item">
+                <h3>RAM0NA</h3>
+                <p>Returns a deterministic decision and signs the result.</p>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section class="section section-muted">
+          <div class="container">
+            <div class="section-heading reveal">
+              <p class="eyebrow">Key properties</p>
+              <h2>Each decision is stable, inspectable, and final.</h2>
+            </div>
+            <div class="pill-grid reveal delay-1">
+              <span class="pill">Deterministic decisions</span>
+              <span class="pill">Fail closed behavior</span>
+              <span class="pill">Cryptographic receipts</span>
+              <span class="pill">Replayable outcomes</span>
+              <span class="pill">Cross runtime consistency</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="container cta-block reveal">
+            <p class="eyebrow">Contact</p>
+            <h2>If execution matters, control it before it starts.</h2>
+            <a class="button button-primary" href="contact.html">Contact</a>
+          </div>
+        </section>
+      </main>
+      <footer class="site-footer" data-include="footer"></footer>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="MNDe Systems blog post on the cost of retries."
+    />
+    <title>The cost of retries | MNDe Systems</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/css/site.css" />
+    <script defer src="../assets/js/analytics.js"></script>
+    <script defer src="../assets/js/site.js"></script>
+  </head>
+  <body data-page="blog">
+    <div class="site-shell">
+      <header class="site-header" data-include="header"></header>
+      <main class="page-main">
+        <article class="section">
+          <div class="container reveal">
+            <p class="eyebrow">Post 3</p>
+            <h1>The cost of retries</h1>
+            <p class="page-intro">How small retry loops become large failures.</p>
+            <div class="copy-block article-copy">
+              <p>A retry is often treated as safe by default. It rarely is. Each retry adds more pressure to the same failing path.</p>
+              <p>What begins as a small recovery mechanism can become queue growth, duplicate work, extra spend, and user visible instability.</p>
+              <p>The right place to control retries is before execution, where count, cost, and scope can be evaluated as part of the decision itself.</p>
+              <p>MNDe refuses requests that have already exceeded policy. That keeps a bounded failure from turning into an expanding one.</p>
+            </div>
+          </div>
+        </article>
+      </main>
+      <footer class="site-footer" data-include="footer"></footer>
+    </div>
+  </body>
+</html>

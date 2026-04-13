@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Blog posts from MNDe Systems on execution control, failure cases, and system design."
+    />
+    <title>Blog | MNDe Systems</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/css/site.css" />
+    <script defer src="assets/js/analytics.js"></script>
+    <script defer src="assets/js/site.js"></script>
+  </head>
+  <body data-page="blog">
+    <div class="site-shell">
+      <header class="site-header" data-include="header"></header>
+      <main class="page-main">
+        <section class="page-hero">
+          <div class="container reveal">
+            <p class="eyebrow">Blog</p>
+            <h1>Blog</h1>
+            <p class="page-intro">Short posts on execution control, failure cases, and system design.</p>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="container">
+            <!-- Add a new post by creating a file in blog/ and adding one matching card here. -->
+            <div class="blog-grid">
+              <article class="blog-card reveal">
+                <p class="blog-meta">Post 1</p>
+                <h2><a href="blog/why-post-execution-alerts-fail.html">Why post execution alerts fail</a></h2>
+                <p>Problems detected after execution still incur cost and risk.</p>
+              </article>
+              <article class="blog-card reveal delay-1">
+                <p class="blog-meta">Post 2</p>
+                <h2><a href="blog/determinism-in-distributed-systems.html">Determinism in distributed systems</a></h2>
+                <p>Why identical inputs must produce identical outcomes.</p>
+              </article>
+              <article class="blog-card reveal delay-2">
+                <p class="blog-meta">Post 3</p>
+                <h2><a href="blog/the-cost-of-retries.html">The cost of retries</a></h2>
+                <p>How small retry loops become large failures.</p>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section class="section section-muted">
+          <div class="container reveal">
+            <div class="section-heading">
+              <p class="eyebrow">Adding posts</p>
+              <h2>New posts are file based.</h2>
+            </div>
+            <div class="copy-block">
+              <p>Add a new HTML file in the <code>blog/</code> directory.</p>
+              <p>Add one matching entry on this page.</p>
+              <p>The structure is flat on purpose so posts are easy to extend without a framework.</p>
+            </div>
+          </div>
+        </section>
+      </main>
+      <footer class="site-footer" data-include="footer"></footer>
+    </div>
+  </body>
+</html>

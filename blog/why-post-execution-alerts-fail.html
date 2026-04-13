@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="MNDe Systems blog post on why post execution alerts fail."
+    />
+    <title>Why post execution alerts fail | MNDe Systems</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/css/site.css" />
+    <script defer src="../assets/js/analytics.js"></script>
+    <script defer src="../assets/js/site.js"></script>
+  </head>
+  <body data-page="blog">
+    <div class="site-shell">
+      <header class="site-header" data-include="header"></header>
+      <main class="page-main">
+        <article class="section">
+          <div class="container reveal">
+            <p class="eyebrow">Post 1</p>
+            <h1>Why post execution alerts fail</h1>
+            <p class="page-intro">Problems detected after execution still incur cost and risk.</p>
+            <div class="copy-block article-copy">
+              <p>An alert tells you something already happened. It does not stop the spend, the retry storm, or the failed side effect.</p>
+              <p>That gap matters. By the time a monitoring system emits a warning, compute has been allocated, state may have changed, and cleanup has already become a second problem.</p>
+              <p>Execution control only works if the decision happens before runtime. That is the difference between evidence and prevention.</p>
+              <p>MNDe exists to make that boundary explicit. A request is normalized, evaluated, and either allowed or refused before execution starts.</p>
+            </div>
+          </div>
+        </article>
+      </main>
+      <footer class="site-footer" data-include="footer"></footer>
+    </div>
+  </body>
+</html>
