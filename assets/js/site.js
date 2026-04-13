@@ -150,10 +150,10 @@ function renderHeader() {
 
   header.innerHTML = `
     <div class="container nav-shell">
-      <a class="brand" href="${basePath}index.html" aria-label="MNDe Systems home">
+      <a class="brand" href="${basePath}index.html" aria-label="MNDe home">
         <span class="brand-mark">M</span>
         <span class="brand-text">
-          <strong>MNDe Systems</strong>
+          <strong>MNDe</strong>
           <span>Deterministic execution control</span>
         </span>
       </a>
@@ -186,7 +186,7 @@ function renderFooter() {
   footer.innerHTML = `
     <div class="container footer-shell">
       <div class="footer-copy">
-        <strong>MNDe Systems</strong>
+        <strong>MNDe</strong>
         <span>Deterministic execution control</span>
         <a href="mailto:mndesystems@gmail.com">Email: mndesystems@gmail.com</a>
       </div>
@@ -229,7 +229,7 @@ function setupContactForm() {
     const email = String(formData.get("email") || "").trim();
     const message = String(formData.get("message") || "").trim();
 
-    const subject = encodeURIComponent(`MNDe Systems inquiry from ${name}`);
+    const subject = encodeURIComponent(`MNDe inquiry from ${name}`);
     const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${message}`);
 
     trackEvent("Contact Form Submit", {
