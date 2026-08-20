@@ -3,82 +3,24 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="How MNDe processes a request step by step before runtime."
-    />
-    <title>How It Works | MNDe</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
+    <meta http-equiv="refresh" content="0; url=index.html#architecture" />
+    <link rel="canonical" href="index.html#architecture" />
+    <meta name="robots" content="noindex" />
+    <title>Redirecting | MNDe</title>
     <link rel="stylesheet" href="assets/css/site.css" />
-    <script defer src="assets/js/analytics.js"></script>
-    <script defer src="assets/js/site.js"></script>
   </head>
-  <body data-page="how-it-works">
+  <body data-page="product">
     <div class="site-shell">
-      <header class="site-header" data-include="header"></header>
-      <main class="page-main">
+      <main id="main" class="page-main">
         <section class="page-hero">
-          <div class="container reveal">
-            <p class="eyebrow">How It Works</p>
-            <h1>Step by step</h1>
-          </div>
-        </section>
-
-        <section class="section">
           <div class="container">
-            <div class="timeline">
-              <article class="timeline-item reveal">
-                <span class="timeline-step">01</span>
-                <div>
-                  <h2>A request arrives</h2>
-                  <p>A request enters MNDe before runtime. The request is treated as input to a decision system, not as a best effort hint.</p>
-                </div>
-              </article>
-              <article class="timeline-item reveal delay-1">
-                <span class="timeline-step">02</span>
-                <div>
-                  <h2>Preflight normalizes the input</h2>
-                  <p>Preflight reduces the request to a canonical form. Unknown fields and malformed structures are rejected so policy sees the exact same shape every time.</p>
-                </div>
-              </article>
-              <article class="timeline-item reveal delay-2">
-                <span class="timeline-step">03</span>
-                <div>
-                  <h2>ARM calculates limits and cost</h2>
-                  <p>ARM computes cost, scope, and declared limits before execution. If the request exceeds policy or capacity, it is stopped before resources are consumed.</p>
-                </div>
-              </article>
-              <article class="timeline-item reveal delay-3">
-                <span class="timeline-step">04</span>
-                <div>
-                  <h2>Policy is evaluated</h2>
-                  <p>The normalized request and calculated bounds are evaluated against policy. There is one policy outcome for one input and one policy state.</p>
-                </div>
-              </article>
-              <article class="timeline-item reveal delay-4">
-                <span class="timeline-step">05</span>
-                <div>
-                  <h2>RAM0NA returns allow or refuse</h2>
-                  <p>RAM0NA returns the decision as a deterministic result. Allow or refuse. There is no silent downgrade, no warning mode, and no hidden branch.</p>
-                </div>
-              </article>
-              <article class="timeline-item reveal delay-5">
-                <span class="timeline-step">06</span>
-                <div>
-                  <h2>Decision is signed and stored</h2>
-                  <p>The final result is signed and written as a replayable record. The same request and policy can be re-run later and verified against the stored outcome.</p>
-                </div>
-              </article>
-            </div>
+            <p class="eyebrow">Redirecting</p>
+            <h1>Architecture</h1>
+            <p class="lead">This page has moved. If you are not redirected automatically,
+              <a class="inline-link" href="index.html#architecture">continue to Architecture</a>.</p>
           </div>
         </section>
       </main>
-      <footer class="site-footer" data-include="footer"></footer>
     </div>
   </body>
 </html>
