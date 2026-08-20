@@ -5,8 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Contact MNDe for inquiries about deterministic execution control."
+      content="Request a technical pilot of MNDe machine-authorization infrastructure, or reach the team directly."
     />
+    <meta name="theme-color" content="#111416" />
     <title>Contact | MNDe</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -19,15 +20,20 @@
     <script defer src="assets/js/site.js"></script>
   </head>
   <body data-page="contact">
+    <a class="skip-link" href="#main">Skip to content</a>
     <div class="site-shell">
       <header class="site-header" data-include="header"></header>
-      <main class="page-main">
+      <main id="main" class="page-main">
         <section class="page-hero">
           <div class="container reveal">
             <p class="eyebrow">Contact</p>
-            <h1>Contact</h1>
-            <p class="page-intro">For inquiries, reach out directly.</p>
-            <p class="contact-direct"><a href="mailto:mndesystems@gmail.com">mndesystems@gmail.com</a></p>
+            <h1>Request a technical pilot</h1>
+            <p class="lead">
+              The pilot proves, on one authorized GitHub merge, that authority precedes execution —
+              and that it cannot be mutated, replayed, or bypassed. Reach out directly or use the
+              form below.
+            </p>
+            <p class="mt-2"><a class="inline-link" href="mailto:mndesystems@gmail.com">mndesystems@gmail.com</a></p>
           </div>
         </section>
 
@@ -35,15 +41,24 @@
           <div class="container contact-grid">
             <div class="contact-panel reveal">
               <h2>Direct</h2>
-              <p>Email</p>
+              <p class="muted">Email</p>
               <a class="inline-link" href="mailto:mndesystems@gmail.com">mndesystems@gmail.com</a>
+              <p class="muted mt-2">Pilot scope</p>
+              <p class="muted">GitHub protected-merge: exact-action grant, protected executor, credential dispossession, and linked evidence.</p>
             </div>
-            <form class="contact-form reveal delay-1" id="contact-form">
+            <form class="contact-form reveal delay-1" id="contact-form" novalidate>
               <label for="name">Name</label>
-              <input id="name" name="name" type="text" required />
+              <input id="name" name="name" type="text" autocomplete="name" required />
 
               <label for="email">Email</label>
-              <input id="email" name="email" type="email" required />
+              <input id="email" name="email" type="email" autocomplete="email" required />
+
+              <label for="intent">Intent</label>
+              <select id="intent" name="intent">
+                <option>Request a technical pilot</option>
+                <option>Architecture / security question</option>
+                <option>General inquiry</option>
+              </select>
 
               <label for="message">Message</label>
               <textarea id="message" name="message" rows="6" required></textarea>
