@@ -13,7 +13,7 @@ const indexHtml = read("index.html");
 const contactHtml = read("contact.html");
 
 test("primary navigation exposes the expected sections", () => {
-  ["Product", "Architecture", "Evidence", "Integrations", "Security", "Roadmap", "Contact"].forEach((label) => {
+  ["Product", "Architecture", "Evidence", "Integrations", "Security", "Roadmap", "Blog", "Contact"].forEach((label) => {
     assert.ok(siteJs.includes(`label: "${label}"`), `nav should include ${label}`);
   });
 });
@@ -55,7 +55,12 @@ test("pages contain no CSP-violating inline scripts, styles, or handlers", () =>
   const htmlFiles = fs
     .readdirSync(root)
     .filter((f) => f.endsWith(".html"))
-    .concat(["blog/determinism-in-distributed-systems.html", "blog/the-cost-of-retries.html", "blog/why-post-execution-alerts-fail.html"]);
+    .concat(
+      fs
+        .readdirSync(path.join(root, "blog"))
+        .filter((f) => f.endsWith(".html"))
+        .map((f) => `blog/${f}`)
+    );
 
   htmlFiles.forEach((file) => {
     const html = read(file);
