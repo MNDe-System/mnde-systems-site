@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="The count of non-human principals only grows. Controls that feel optional at one agent become load-bearing at ten thousand. Machine authorization is infrastructure, not a feature."
+    />
+    <meta name="theme-color" content="#111416" />
+    <title>Preparing for a world of many agents | MNDe</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/svg+xml" href="../assets/img/mnde-mark.svg" />
+    <link rel="stylesheet" href="../assets/css/site.css" />
+    <script defer src="../assets/js/analytics.js"></script>
+    <script defer src="../assets/js/site.js"></script>
+  </head>
+  <body data-page="blog">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="site-shell">
+      <header class="site-header" data-include="header"></header>
+      <main id="main" class="page-main">
+        <article class="section">
+          <div class="container container-narrow reveal">
+            <p class="eyebrow">Positioning · 2026-06-05</p>
+            <h1>Preparing for a world of many agents</h1>
+            <p class="lead">
+              We are not forecasting a singular event. We are observing a trend line: the number of
+              non-human principals taking consequential actions keeps rising. Controls that feel
+              optional at one agent become load-bearing at ten thousand.
+            </p>
+
+            <div class="copy-block article-copy">
+              <p>
+                It is worth being measured about this. There is no shortage of dramatic claims about
+                autonomous software, and most of them age badly. The narrow, defensible observation is
+                simpler and harder to argue with: systems are steadily delegating more actions to
+                software that decides and acts on its own, and each such actor operates faster, more
+                literally, and more tirelessly than the people it stands in for. You do not need a
+                specific future to take that seriously. You need only the direction.
+              </p>
+
+              <h2>Scale changes which controls are load-bearing</h2>
+              <p>
+                Many safeguards work at small numbers because a human absorbs the slack. Code review
+                catches the bad merge; an on-call engineer notices the strange spend; a colleague asks
+                why a transfer looks off. These controls scale with attention, and attention does not
+                scale with the number of agents. At one agent, per-action authorization can feel like
+                ceremony. At ten thousand agents each acting continuously, the human backstops are
+                already saturated, and anything that depended on someone noticing has quietly stopped
+                working.
+              </p>
+              <p>
+                What remains load-bearing at scale is what does not depend on attention: authority
+                that is checked mechanically at the moment of execution, bound to the exact action,
+                single-use, and refused by default when anything is off. Those properties do not get
+                more expensive per action as the population of agents grows. That is precisely why
+                they are the ones worth building around.
+              </p>
+
+              <p class="invariant">
+                A control that relies on someone noticing does not scale;
+                <span>a control enforced at the exact action, by default, does.</span>
+              </p>
+
+              <h2>Infrastructure, not a feature</h2>
+              <p>
+                Framing matters. If per-action authorization is a feature, it is something each
+                application bolts on, inconsistently, when it remembers to. If it is infrastructure, it
+                is a boundary that consequential actions pass through regardless of which agent
+                initiated them or how the calling code was written. The second framing is the only one
+                that holds up as the number of principals grows, because it does not ask every author
+                to opt in correctly. It is a property of the path, not the politeness of the caller.
+              </p>
+              <p>
+                This is also where we are careful not to overstate our own maturity. The mechanisms
+                that make authority specific and unreplayable — canonical binding, single-use grants,
+                linked evidence — are implemented or in limited form today. The property that makes
+                this infrastructure rather than a feature, non-bypassability, is target architecture:
+                it is real only when provider identity, credential custody, and network policy make the
+                protected executor the sole path to the action. We are building toward that end state
+                and we say plainly which parts are there and which are not.
+              </p>
+
+              <h2>Why start now</h2>
+              <p>
+                Because the cheap moment to install a boundary is before the traffic depends on it.
+                Retrofitting per-action authority onto a system already running thousands of agents is
+                far harder than designing the boundary in while the numbers are small. The trend does
+                not need to be dramatic to be decisive. It only needs to keep going in the direction it
+                is already going — and prudent infrastructure is built for where the line is heading,
+                not where it sits today.
+              </p>
+            </div>
+
+            <nav class="post-nav" aria-label="Related posts">
+              <a class="post-nav-link" href="capability-not-identity.html">
+                <span>Related</span>
+                <strong>Capability, not identity, is the unit of machine trust</strong>
+              </a>
+              <a class="post-nav-link" href="evidence-you-can-verify.html">
+                <span>Related</span>
+                <strong>Evidence you can verify without trusting us</strong>
+              </a>
+            </nav>
+
+            <div class="post-cta">
+              <p>
+                Building for a growing population of agents? The pilot shows the enforcement boundary
+                on one authorized GitHub merge — the same boundary that has to hold at scale.
+              </p>
+              <a class="button button-primary" href="../contact.html">Request a technical pilot</a>
+            </div>
+          </div>
+        </article>
+      </main>
+      <footer class="site-footer" data-include="footer"></footer>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Identity tells you who is asking. It never tells you whether this exact action was authorized. As principals stop being people, that gap becomes the control that matters."
+    />
+    <meta name="theme-color" content="#111416" />
+    <title>Capability, not identity, is the unit of machine trust | MNDe</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/svg+xml" href="../assets/img/mnde-mark.svg" />
+    <link rel="stylesheet" href="../assets/css/site.css" />
+    <script defer src="../assets/js/analytics.js"></script>
+    <script defer src="../assets/js/site.js"></script>
+  </head>
+  <body data-page="blog">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="site-shell">
+      <header class="site-header" data-include="header"></header>
+      <main id="main" class="page-main">
+        <article class="section">
+          <div class="container container-narrow reveal">
+            <p class="eyebrow">Machine trust · 2026-08-14</p>
+            <h1>Capability, not identity, is the unit of machine trust</h1>
+            <p class="lead">
+              Identity answers one question: who is asking. It was never designed to answer the
+              question that actually protects a system — is <em>this</em> exact action, on
+              <em>this</em> exact resource, right now, authorized.
+            </p>
+
+            <div class="copy-block article-copy">
+              <p>
+                Most access control still assumes a person sits behind every request. A human logs
+                in, we authenticate them, and we lean on judgment, latency, and consequences to keep
+                the blast radius small. The account is the principal, and the account maps to someone
+                who can be held responsible. That assumption is quietly dissolving. The principals
+                making consequential requests are increasingly agents: software that plans, calls
+                tools, and acts thousands of times faster than any reviewer.
+              </p>
+
+              <h2>Identity is a claim about the requester, not the request</h2>
+              <p>
+                An identity token proves an actor is who it says it is. It says nothing about scope.
+                A valid token for a service that is allowed to merge pull requests is equally valid
+                for merging the right pull request and the wrong one. The moment we grant a broad
+                identity a broad permission, every future action taken under it inherits that breadth
+                — including actions no one anticipated when the permission was issued.
+              </p>
+              <p>
+                For a human operator this is tolerable, because a person rarely exercises the full
+                surface of what they are technically allowed to do. An agent will. It explores the
+                permission surface exhaustively and without hesitation, because that is what
+                optimization looks like. Identity-shaped controls degrade precisely when the actor
+                stops being a person.
+              </p>
+
+              <h2>Capability is a claim about the action</h2>
+              <p>
+                A capability inverts the question. Instead of "is this actor allowed to do things of
+                this kind," it asks "does this actor hold valid, specific, unconsumed authority for
+                exactly this action." The authority is not a role the actor <em>is</em>; it is an
+                object the actor must <em>present</em>, bound to a single action, a single resource,
+                a canonical set of parameters, and a short lifetime.
+              </p>
+              <p>
+                In MNDe this object is an exact-action grant. It is not a session and not a role. It
+                names one operation and refuses to stretch to cover a neighboring one. If any bound
+                field changes — the repository, the commit, a parameter — the grant identity changes
+                and verification fails before the protected executor contacts any provider.
+              </p>
+
+              <p class="invariant">
+                The unit of trust is the authorized action, not the authenticated actor:
+                <span>no consequential action executes without valid, specific, unconsumed authority
+                for that exact action.</span>
+              </p>
+
+              <h2>What this does and does not claim</h2>
+              <p>
+                Capability-based authority does not abolish identity. The authority plane still needs
+                to know who is requesting a grant, and delegation still starts from an authenticated
+                principal. The claim is narrower and more durable: identity should decide whether you
+                may <em>obtain</em> authority, and a capability should decide whether a specific
+                action <em>executes</em>. Collapsing those two decisions into one long-lived
+                permission is the mistake.
+              </p>
+              <p>
+                It is worth being precise about maturity. Canonical parameter binding — the mechanism
+                that makes a grant refer to one action and not its neighbor — is implemented and runs
+                as a reference in the browser. Non-bypassability, the property that an agent cannot
+                simply route around the grant and call the provider directly, is target architecture:
+                it depends on provider identity, credential custody, and network policy, and it is
+                only real once a deployment enforces it. We say so rather than implying the end state
+                already holds.
+              </p>
+
+              <h2>Why the shift is not optional</h2>
+              <p>
+                The trajectory is one-directional. The number of non-human principals in a typical
+                system is growing, and each one is faster and more literal than the humans it
+                replaces. Controls that key off identity were tuned for a population that no longer
+                dominates the request stream. Keying trust to the action — the thing that actually has
+                consequences — is how authorization survives that shift.
+              </p>
+            </div>
+
+            <nav class="post-nav" aria-label="Related posts">
+              <a class="post-nav-link" href="the-execution-gap.html">
+                <span>Related</span>
+                <strong>The execution gap: "it had permission" is the wrong question</strong>
+              </a>
+              <a class="post-nav-link" href="many-agents.html">
+                <span>Related</span>
+                <strong>Preparing for a world of many agents</strong>
+              </a>
+            </nav>
+
+            <div class="post-cta">
+              <p>
+                Want to see capability-bound authorization refuse a mutated or replayed action on a
+                real GitHub merge? The pilot proves it on one authorized action.
+              </p>
+              <a class="button button-primary" href="../contact.html">Request a technical pilot</a>
+            </div>
+          </div>
+        </article>
+      </main>
+      <footer class="site-footer" data-include="footer"></footer>
+    </div>
+  </body>
+</html>

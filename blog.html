@@ -14,6 +14,7 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
+    <link rel="icon" type="image/svg+xml" href="assets/img/mnde-mark.svg" />
     <link rel="stylesheet" href="assets/css/site.css" />
     <script defer src="assets/js/analytics.js"></script>
     <script defer src="assets/js/site.js"></script>
@@ -25,8 +26,11 @@
         <section class="page-hero">
           <div class="container reveal">
             <p class="eyebrow">Blog</p>
-            <h1>Blog</h1>
-            <p class="page-intro">Short posts on execution control, failure cases, and system design.</p>
+            <h1>Authority before execution</h1>
+            <p class="page-intro">
+              One thesis, examined from several angles: no consequential machine action executes
+              unless it presents valid, specific, unconsumed authority for that exact action.
+            </p>
           </div>
         </section>
 
@@ -35,19 +39,29 @@
             <!-- Add a new post by creating a file in blog/ and adding one matching card here. -->
             <div class="blog-grid">
               <article class="blog-card reveal">
-                <p class="blog-meta">Post 1</p>
-                <h2><a href="blog/why-post-execution-alerts-fail.html">Why post execution alerts fail</a></h2>
-                <p>Problems detected after execution still incur cost and risk.</p>
+                <p class="blog-meta">Machine trust · 2026-08-14</p>
+                <h2><a href="blog/capability-not-identity.html">Capability, not identity, is the unit of machine trust</a></h2>
+                <p>Identity says who is asking. It never says whether this exact action was authorized — and that gap widens as principals stop being people.</p>
               </article>
               <article class="blog-card reveal delay-1">
-                <p class="blog-meta">Post 2</p>
-                <h2><a href="blog/determinism-in-distributed-systems.html">Determinism in distributed systems</a></h2>
-                <p>Why identical inputs must produce identical outcomes.</p>
+                <p class="blog-meta">Authorization model · 2026-07-31</p>
+                <h2><a href="blog/the-execution-gap.html">The execution gap: “it had permission” is the wrong question</a></h2>
+                <p>A standing permission is a broad ambient claim; an execution is one specific act. Authorize the act, at the act.</p>
               </article>
               <article class="blog-card reveal delay-2">
-                <p class="blog-meta">Post 3</p>
-                <h2><a href="blog/the-cost-of-retries.html">The cost of retries</a></h2>
-                <p>How small retry loops become large failures.</p>
+                <p class="blog-meta">Replay defense · 2026-07-17</p>
+                <h2><a href="blog/single-use-by-default.html">Single-use by default: authority that cannot be replayed</a></h2>
+                <p>A grant presented twice is a grant you have lost control of. One nonce, one action, consumed exactly once.</p>
+              </article>
+              <article class="blog-card reveal">
+                <p class="blog-meta">Evidence · 2026-06-26</p>
+                <h2><a href="blog/evidence-you-can-verify.html">Evidence you can verify without trusting us</a></h2>
+                <p>Two linked receipts — authorized and executed — verifiable offline against published keys. Honest about tamper-evidence versus resistance.</p>
+              </article>
+              <article class="blog-card reveal delay-1">
+                <p class="blog-meta">Positioning · 2026-06-05</p>
+                <h2><a href="blog/many-agents.html">Preparing for a world of many agents</a></h2>
+                <p>The count of non-human principals only grows. Controls that feel optional at one agent become load-bearing at ten thousand.</p>
               </article>
             </div>
           </div>
@@ -56,13 +70,25 @@
         <section class="section section-muted">
           <div class="container reveal">
             <div class="section-heading">
-              <p class="eyebrow">Adding posts</p>
-              <h2>New posts are file based.</h2>
+              <p class="eyebrow">Earlier notes</p>
+              <h2>Shorter pieces on execution control.</h2>
             </div>
-            <div class="copy-block">
-              <p>Add a new HTML file in the <code>blog/</code> directory.</p>
-              <p>Add one matching entry on this page.</p>
-              <p>The structure is flat on purpose so posts are easy to extend without a framework.</p>
+            <div class="blog-grid">
+              <article class="blog-card">
+                <p class="blog-meta">Note</p>
+                <h2><a href="blog/why-post-execution-alerts-fail.html">Why post execution alerts fail</a></h2>
+                <p>Problems detected after execution still incur cost and risk.</p>
+              </article>
+              <article class="blog-card">
+                <p class="blog-meta">Note</p>
+                <h2><a href="blog/determinism-in-distributed-systems.html">Determinism in distributed systems</a></h2>
+                <p>Why identical inputs must produce identical outcomes.</p>
+              </article>
+              <article class="blog-card">
+                <p class="blog-meta">Note</p>
+                <h2><a href="blog/the-cost-of-retries.html">The cost of retries</a></h2>
+                <p>How small retry loops become large failures.</p>
+              </article>
             </div>
           </div>
         </section>
