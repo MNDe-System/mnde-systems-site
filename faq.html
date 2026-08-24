@@ -3,25 +3,114 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="refresh" content="0; url=index.html#product" />
-    <link rel="canonical" href="index.html#product" />
-    <meta name="robots" content="noindex" />
-    <title>Redirecting | MNDe</title>
+    <meta
+      name="description"
+      content="MNDe FAQ: how the execution boundary works, why decisions are deterministic, what the proof bundle contains, and how to run the live simulator — each answer links to a demo."
+    />
+    <meta name="theme-color" content="#05070d" />
+    <link rel="canonical" href="https://mndesystems.com/faq.html" />
+    <title>FAQ | MNDe</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
     <link rel="icon" type="image/svg+xml" href="assets/img/mnde-mark.svg" />
     <link rel="stylesheet" href="assets/css/site.css" />
+    <script defer src="assets/js/analytics.js"></script>
+    <script defer src="assets/js/api.js"></script>
+    <script defer src="assets/js/site.js"></script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What does MNDe actually do?",
+            "acceptedAnswer": { "@type": "Answer", "text": "MNDe is an execution boundary: it validates a request, computes a deterministic ALLOW or REFUSE decision, and only then executes or refuses. The decision happens before any cost is incurred, not after." }
+          },
+          {
+            "@type": "Question",
+            "name": "Why are decisions deterministic?",
+            "acceptedAnswer": { "@type": "Answer", "text": "The same input always produces the same decision and the same hashes, because the decision is a pure function of the request and a versioned policy. You can verify this by running the determinism test ten times." }
+          },
+          {
+            "@type": "Question",
+            "name": "Is the decision made in my browser?",
+            "acceptedAnswer": { "@type": "Answer", "text": "No. The browser only sends inputs and renders the response. Every ALLOW/REFUSE decision is computed server-side by /api/simulate and returned with a request_hash and decision_hash." }
+          },
+          {
+            "@type": "Question",
+            "name": "What is in the proof bundle?",
+            "acceptedAnswer": { "@type": "Answer", "text": "A ZIP containing a manifest, drift report, parity report, replay report, and a sample decision. Its SHA-256 is published on the Proof page so you can confirm the file you downloaded is the one described." }
+          },
+          {
+            "@type": "Question",
+            "name": "What happens when I submit the contact form?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Your request is validated and sanitized, then queued and routed for review, returning a real request ID and timestamp. If the mail provider is not configured or sending fails, you get an explicit error — never a fake success." }
+          }
+        ]
+      }
+    </script>
   </head>
-  <body data-page="product">
+  <body data-page="faq">
+    <a class="skip-link" href="#main">Skip to content</a>
     <div class="site-shell">
+      <header class="site-header" data-include="header"></header>
       <main id="main" class="page-main">
         <section class="page-hero">
+          <div class="container reveal">
+            <p class="eyebrow">FAQ</p>
+            <h1>Direct answers.</h1>
+            <p class="lead">Each answer links to the live demo that proves it — a simulator, a proof test, or an example.</p>
+          </div>
+        </section>
+
+        <section class="section">
           <div class="container">
-            <p class="eyebrow">Redirecting</p>
-            <h1>Product</h1>
-            <p class="lead">This page has moved. If you are not redirected automatically,
-              <a class="inline-link" href="index.html#product">continue to Product</a>.</p>
+            <div class="faq-list reveal">
+              <details class="faq-item" open>
+                <summary>What does MNDe actually do?</summary>
+                <div class="faq-body">
+                  <p>MNDe is an execution boundary: it validates a request, computes a deterministic ALLOW or REFUSE decision, and only then executes or refuses. The decision happens before any cost is incurred, not after.</p>
+                  <p><a class="button button-secondary button-sm" href="how-it-works.html">See the pipeline</a></p>
+                </div>
+              </details>
+              <details class="faq-item">
+                <summary>Why are decisions deterministic?</summary>
+                <div class="faq-body">
+                  <p>The same input always produces the same decision and the same hashes, because the decision is a pure function of the request and a versioned policy. Nothing depends on timing, ordering, or runtime.</p>
+                  <p><a class="button button-secondary button-sm" href="proof.html#main">Run the determinism test</a></p>
+                </div>
+              </details>
+              <details class="faq-item">
+                <summary>Is the decision made in my browser?</summary>
+                <div class="faq-body">
+                  <p>No. The browser only sends inputs and renders the response. Every ALLOW/REFUSE decision is computed server-side by <code>/api/simulate</code> and returned with a request and decision hash.</p>
+                  <p><a class="button button-secondary button-sm" href="examples.html">Try the live examples</a></p>
+                </div>
+              </details>
+              <details class="faq-item">
+                <summary>What is in the proof bundle?</summary>
+                <div class="faq-body">
+                  <p>A ZIP with a manifest, drift report, parity report, replay report, and a sample decision. Its SHA-256 is published so you can confirm the file you downloaded is the one described.</p>
+                  <p><a class="button button-secondary button-sm" href="proof.html">Download and check it</a></p>
+                </div>
+              </details>
+              <details class="faq-item">
+                <summary>What happens when I submit the contact form?</summary>
+                <div class="faq-body">
+                  <p>Your request is validated and sanitized, then queued and routed for review, returning a real request ID and timestamp. If mail is not configured or sending fails, you get an explicit error — never a fake success.</p>
+                  <p><a class="button button-secondary button-sm" href="contact.html">Open the contact form</a></p>
+                </div>
+              </details>
+            </div>
           </div>
         </section>
       </main>
+      <footer class="site-footer" data-include="footer"></footer>
     </div>
   </body>
 </html>

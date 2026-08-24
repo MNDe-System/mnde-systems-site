@@ -5,19 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Request a technical pilot of MNDe machine-authorization infrastructure, or reach the team directly."
+      content="Request a technical pilot of MNDe. Submit your execution-risk use case; validation, queue, and review happen server-side with a real request ID."
     />
-    <meta name="theme-color" content="#111416" />
+    <meta name="theme-color" content="#05070d" />
+    <link rel="canonical" href="https://mndesystems.com/contact.html" />
     <title>Contact | MNDe</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap"
       rel="stylesheet"
     />
     <link rel="icon" type="image/svg+xml" href="assets/img/mnde-mark.svg" />
     <link rel="stylesheet" href="assets/css/site.css" />
     <script defer src="assets/js/analytics.js"></script>
+    <script defer src="assets/js/api.js"></script>
     <script defer src="assets/js/site.js"></script>
   </head>
   <body data-page="contact">
@@ -30,9 +32,8 @@
             <p class="eyebrow">Contact</p>
             <h1>Request a technical pilot</h1>
             <p class="lead">
-              The pilot proves, on one authorized GitHub merge, that authority precedes execution —
-              and that it cannot be mutated, replayed, or bypassed. Reach out directly or use the
-              form below.
+              Tell us the execution you want bounded. Your request is validated, queued, and routed
+              for review by the server — you get a real request ID, not a fake success screen.
             </p>
             <p class="mt-2"><a class="inline-link" href="mailto:contact@mndesystems.com">contact@mndesystems.com</a></p>
           </div>
@@ -41,31 +42,30 @@
         <section class="section">
           <div class="container contact-grid">
             <div class="contact-panel reveal">
-              <h2>Direct</h2>
-              <p class="muted">Email</p>
-              <a class="inline-link" href="mailto:contact@mndesystems.com">contact@mndesystems.com</a>
+              <h2>Request lifecycle</h2>
+              <ol class="req-lifecycle" id="contact-lifecycle">
+                <li data-stage="validated"><strong>Validation</strong><span>Fields checked and sanitized server-side.</span></li>
+                <li data-stage="queued"><strong>Queue</strong><span>Accepted and assigned a request ID.</span></li>
+                <li data-stage="review"><strong>Review</strong><span>Routed to the team for execution-risk review.</span></li>
+              </ol>
               <p class="muted mt-2">Pilot scope</p>
               <p class="muted">GitHub protected-merge: exact-action grant, protected executor, credential dispossession, and linked evidence.</p>
             </div>
             <form class="contact-form reveal delay-1" id="contact-form" novalidate>
               <label for="name">Name</label>
-              <input id="name" name="name" type="text" autocomplete="name" required />
+              <input id="name" name="name" type="text" autocomplete="name" required aria-required="true" />
 
-              <label for="email">Email</label>
-              <input id="email" name="email" type="email" autocomplete="email" required />
+              <label for="company">Company</label>
+              <input id="company" name="company" type="text" autocomplete="organization" required aria-required="true" />
 
-              <label for="intent">Intent</label>
-              <select id="intent" name="intent">
-                <option>Request a technical pilot</option>
-                <option>Architecture / security question</option>
-                <option>General inquiry</option>
-              </select>
+              <label for="use_case">Use case</label>
+              <textarea id="use_case" name="use_case" rows="5" required aria-required="true" placeholder="What execution do you need bounded?"></textarea>
 
-              <label for="message">Message</label>
-              <textarea id="message" name="message" rows="6" required></textarea>
+              <label for="email">Email <span class="muted">(optional — for our reply)</span></label>
+              <input id="email" name="email" type="email" autocomplete="email" />
 
-              <button class="button button-primary" type="submit">Submit</button>
-              <p class="form-note" id="form-note" aria-live="polite"></p>
+              <button class="button button-primary" type="submit">Submit request</button>
+              <p class="form-note" id="form-note" role="status" aria-live="polite"></p>
             </form>
           </div>
         </section>

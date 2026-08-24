@@ -14,21 +14,36 @@
       content="Machine-authorization infrastructure: exact-action grants, protected execution, credential dispossession, and linked, offline-verifiable evidence."
     />
     <meta property="og:type" content="website" />
-    <title>MNDe | Authority before execution</title>
+    <meta name="theme-color" content="#05070d" />
+    <link rel="canonical" href="https://mndesystems.com/" />
+    <title>MNDe | Stop execution before it happens</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap"
       rel="stylesheet"
     />
     <link rel="icon" type="image/svg+xml" href="assets/img/mnde-mark.svg" />
     <link rel="stylesheet" href="assets/css/site.css" />
     <script defer src="assets/js/analytics.js"></script>
+    <script defer src="assets/js/api.js"></script>
+    <script defer src="assets/js/simulator.js"></script>
     <script defer src="assets/js/site.js"></script>
     <script defer src="assets/js/evidence-core.js"></script>
     <script defer src="assets/js/evidence-lab.js"></script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "MNDe",
+        "url": "https://mndesystems.com/",
+        "description": "Machine-authorization infrastructure. No consequential machine action executes unless it presents valid, specific, unconsumed authority for that exact action.",
+        "email": "contact@mndesystems.com",
+        "logo": "https://mndesystems.com/assets/img/mnde-mark.svg"
+      }
+    </script>
   </head>
-  <body data-page="product">
+  <body data-page="home">
     <a class="skip-link" href="#main">Skip to content</a>
     <div class="site-shell">
       <header class="site-header" data-include="header"></header>
@@ -38,10 +53,10 @@
           <div class="container">
             <div class="reveal">
               <p class="eyebrow">Machine-authorization infrastructure</p>
-              <h1>Authority before execution.</h1>
+              <h1>Stop execution before it happens.</h1>
               <p class="lead">
-                MNDe ensures that consequential machine actions execute only with valid, specific,
-                unconsumed authority for the exact requested action.
+                MNDe is an execution boundary. A request is validated, a deterministic decision is
+                made, and the action executes or is refused — before any cost is incurred.
               </p>
             </div>
 
@@ -77,8 +92,22 @@
               </div>
             </div>
 
+            <div class="sim-panel reveal delay-2">
+              <div class="sim-panel-head">
+                <p class="eyebrow">Live decision · /api/simulate</p>
+                <h2>Would this execution be allowed?</h2>
+                <p class="muted">Adjust the request. The decision is computed server-side and returns signed hashes — the same input always returns the same result.</p>
+              </div>
+              <div class="sim" data-sim data-gpu="8" data-hours="4" data-retries="1" data-cost="30" data-variant="full"></div>
+              <ul class="proof-signals" aria-label="Proof signals">
+                <li><strong>0 drift</strong><span>across 1000 runs</span></li>
+                <li><strong>Cross-runtime parity</strong><span>verified</span></li>
+              </ul>
+            </div>
+
             <div class="cluster mt-2 reveal delay-2">
               <a class="button button-primary" href="contact.html" data-track-group="cta" data-track-label="Request a technical pilot">Request a technical pilot</a>
+              <a class="button button-secondary" href="proof.html" data-track-group="cta" data-track-label="See the proof">See the proof</a>
               <a class="button button-secondary" href="#architecture">Inspect the architecture</a>
             </div>
 

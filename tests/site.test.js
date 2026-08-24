@@ -12,13 +12,13 @@ const siteJs = read("assets/js/site.js");
 const indexHtml = read("index.html");
 const contactHtml = read("contact.html");
 
-test("primary navigation exposes the expected sections", () => {
-  ["Product", "Architecture", "Evidence", "Integrations", "Security", "Roadmap", "Blog", "Contact"].forEach((label) => {
+test("primary navigation exposes the expected routes", () => {
+  ["Product", "How it works", "Proof", "Examples", "Blog", "FAQ", "Contact"].forEach((label) => {
     assert.ok(siteJs.includes(`label: "${label}"`), `nav should include ${label}`);
   });
 });
 
-test("index page anchors every in-page nav target", () => {
+test("index page retains its in-page content sections", () => {
   ["product", "architecture", "evidence", "integrations", "security", "roadmap"].forEach((id) => {
     assert.match(indexHtml, new RegExp(`id="${id}"`), `index should have section #${id}`);
   });
@@ -66,9 +66,12 @@ test("pages contain no CSP-violating inline scripts, styles, or handlers", () =>
     const html = read(file);
     assert.ok(!/\sstyle="/.test(html), `${file} must not use inline style attributes`);
     assert.ok(!/\son[a-z]+="/.test(html), `${file} must not use inline event handlers`);
-    // <script> tags must only reference external src, never inline code.
+    // <script> tags must only reference external src, never inline executable
+    // code. JSON-LD (type="application/ld+json") is inert structured data, not
+    // script, and is permitted under script-src 'self'.
     const scripts = html.match(/<script\b[^>]*>([\s\S]*?)<\/script>/gi) || [];
     scripts.forEach((tag) => {
+      if (/type\s*=\s*"application\/ld\+json"/i.test(tag)) return;
       const body = tag.replace(/<script\b[^>]*>/i, "").replace(/<\/script>/i, "").trim();
       assert.equal(body, "", `${file} must not contain inline script bodies`);
     });
