@@ -5,16 +5,16 @@
    duplicated markup across sections). */
 
 const navItems = [
-  { id: "product", label: "Product", href: "index.html#product" },
-  { id: "architecture", label: "Architecture", href: "index.html#architecture" },
-  { id: "evidence", label: "Evidence", href: "index.html#evidence" },
-  { id: "integrations", label: "Integrations", href: "index.html#integrations" },
-  { id: "security", label: "Security", href: "index.html#security" },
-  { id: "roadmap", label: "Roadmap", href: "index.html#roadmap" },
+  { id: "product", label: "Product", href: "product.html" },
+  { id: "how", label: "How it works", href: "how-it-works.html" },
+  { id: "proof", label: "Proof", href: "proof.html" },
+  { id: "examples", label: "Examples", href: "examples.html" },
+  { id: "blog", label: "Blog", href: "blog.html" },
+  { id: "faq", label: "FAQ", href: "faq.html" },
   { id: "contact", label: "Contact", href: "contact.html" }
 ];
 
-const CONTACT_EMAIL = "mndesystems@gmail.com";
+const CONTACT_EMAIL = "contact@mndesystems.com";
 
 function getBasePath() {
   return window.location.pathname.includes("/blog/") ? "../" : "";
@@ -66,7 +66,7 @@ function renderHeader() {
   header.innerHTML = `
     <div class="container nav-shell">
       <a class="brand" href="${basePath}index.html" aria-label="MNDe home">
-        <span class="brand-mark" aria-hidden="true">M</span>
+        <img class="brand-logo" src="${basePath}assets/img/mnde-mark.svg" width="64" height="40" alt="" aria-hidden="true" />
         <span class="brand-text">
           <strong>MNDe</strong>
           <span>Machine-authorization infrastructure</span>
@@ -124,7 +124,7 @@ function renderFooter() {
   footer.innerHTML = `
     <div class="container footer-shell">
       <div class="footer-brand">
-        <strong>MNDe</strong>
+        <img class="footer-lockup" src="${basePath}assets/img/mnde-lockup.svg" width="700" height="210" alt="MNDe — Every execution. Verified." />
         <span>Authority before execution. No consequential machine action executes without valid, specific, unconsumed authority for that exact action.</span>
         <span class="footer-contact"><a href="mailto:${CONTACT_EMAIL}">${CONTACT_EMAIL}</a></span>
       </div>
@@ -604,31 +604,62 @@ function renderThreats() {
   }
 }
 
-/* ---------- Contact form (preserved mailto routing) ---------- */
+/* ---------- Contact form (real POST /api/contact) ---------- */
 
 function setupContactForm() {
   const form = document.getElementById("contact-form");
   const note = document.getElementById("form-note");
   if (!form || !note) return;
 
-  form.addEventListener("submit", (event) => {
-    event.preventDefault();
-    const data = new FormData(form);
-    const name = String(data.get("name") || "").trim();
-    const email = String(data.get("email") || "").trim();
-    const intent = String(data.get("intent") || "General inquiry").trim();
-    const message = String(data.get("message") || "").trim();
+  const lifecycle = document.getElementById("contact-lifecycle");
 
-    const subject = encodeURIComponent(`MNDe inquiry — ${intent} — from ${name}`);
-    const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nIntent: ${intent}\n\n${message}`);
-
-    trackEvent("Contact Form Submit", {
-      page: document.body.dataset.page || "unknown",
-      intent
+  function setStage(stage) {
+    if (!lifecycle) return;
+    lifecycle.querySelectorAll("[data-stage]").forEach((node) => {
+      const order = ["validated", "queued", "review"];
+      const active = order.indexOf(node.getAttribute("data-stage")) <= order.indexOf(stage);
+      node.classList.toggle("is-active", active);
     });
+  }
 
-    note.textContent = "Opening your email client.";
-    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const submit = form.querySelector('button[type="submit"]');
+    const data = new FormData(form);
+    const payload = {
+      name: String(data.get("name") || "").trim(),
+      company: String(data.get("company") || "").trim(),
+      use_case: String(data.get("use_case") || "").trim()
+    };
+    const email = String(data.get("email") || "").trim();
+    if (email) payload.email = email;
+
+    note.className = "form-note";
+    note.textContent = "Validating…";
+    if (submit) submit.disabled = true;
+
+    const result = await window.MNDeApi.contact(payload);
+
+    if (submit) submit.disabled = false;
+
+    if (result.ok && result.data && result.data.ok) {
+      setStage("review");
+      note.className = "form-note is-success";
+      note.textContent = `Request received (${result.data.request_id}) at ${result.data.timestamp}. We will review your execution risk.`;
+      form.reset();
+      return;
+    }
+
+    const err = (result.data && result.data.error) || { code: "ERROR", message: "Submission failed." };
+    setStage("validated");
+    note.className = "form-note is-error";
+    if (err.code === "MAIL_NOT_CONFIGURED") {
+      note.textContent = "Configuration error: the mail provider is not set up on the server. Your request was not sent.";
+    } else if (err.details && err.details.field) {
+      note.textContent = `${err.details.field}: ${err.message}`;
+    } else {
+      note.textContent = `${err.code}: ${err.message}`;
+    }
   });
 }
 

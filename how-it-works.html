@@ -3,24 +3,64 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="refresh" content="0; url=index.html#architecture" />
-    <link rel="canonical" href="index.html#architecture" />
-    <meta name="robots" content="noindex" />
-    <title>Redirecting | MNDe</title>
+    <meta
+      name="description"
+      content="How MNDe works: a clickable four-step boundary — request, validation, deterministic decision, execution or refusal — with the checks and failure conditions at each step."
+    />
+    <meta name="theme-color" content="#05070d" />
+    <link rel="canonical" href="https://mndesystems.com/how-it-works.html" />
+    <title>How it works | MNDe</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/svg+xml" href="assets/img/mnde-mark.svg" />
     <link rel="stylesheet" href="assets/css/site.css" />
+    <script defer src="assets/js/analytics.js"></script>
+    <script defer src="assets/js/api.js"></script>
+    <script defer src="assets/js/simulator.js"></script>
+    <script defer src="assets/js/pipeline.js"></script>
+    <script defer src="assets/js/site.js"></script>
   </head>
-  <body data-page="product">
+  <body data-page="how">
+    <a class="skip-link" href="#main">Skip to content</a>
     <div class="site-shell">
+      <header class="site-header" data-include="header"></header>
       <main id="main" class="page-main">
         <section class="page-hero">
+          <div class="container reveal">
+            <p class="eyebrow">How it works</p>
+            <h1>Request to decision, step by step.</h1>
+            <p class="lead">
+              MNDe is a boundary consequential actions pass through: request → validation →
+              deterministic decision → execute or refuse. Click each step to see what it does.
+            </p>
+          </div>
+        </section>
+
+        <section class="section">
           <div class="container">
-            <p class="eyebrow">Redirecting</p>
-            <h1>Architecture</h1>
-            <p class="lead">This page has moved. If you are not redirected automatically,
-              <a class="inline-link" href="index.html#architecture">continue to Architecture</a>.</p>
+            <div id="pipeline" class="pipeline reveal"></div>
+          </div>
+        </section>
+
+        <section class="section section-muted">
+          <div class="container reveal">
+            <div class="section-heading">
+              <p class="eyebrow">See it decide</p>
+              <h2>The decision step, live.</h2>
+              <p class="lead">This is the real decision step running against <code>/api/simulate</code>.</p>
+            </div>
+            <div class="sim-panel">
+              <div class="sim" data-sim data-gpu="16" data-hours="8" data-retries="3" data-cost="40" data-variant="full"></div>
+            </div>
+            <p class="lead mt-2"><a class="inline-link" href="proof.html">Verify the determinism →</a></p>
           </div>
         </section>
       </main>
+      <footer class="site-footer" data-include="footer"></footer>
     </div>
   </body>
 </html>

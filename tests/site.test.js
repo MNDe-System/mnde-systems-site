@@ -12,13 +12,13 @@ const siteJs = read("assets/js/site.js");
 const indexHtml = read("index.html");
 const contactHtml = read("contact.html");
 
-test("primary navigation exposes the expected sections", () => {
-  ["Product", "Architecture", "Evidence", "Integrations", "Security", "Roadmap", "Contact"].forEach((label) => {
+test("primary navigation exposes the expected routes", () => {
+  ["Product", "How it works", "Proof", "Examples", "Blog", "FAQ", "Contact"].forEach((label) => {
     assert.ok(siteJs.includes(`label: "${label}"`), `nav should include ${label}`);
   });
 });
 
-test("index page anchors every in-page nav target", () => {
+test("index page retains its in-page content sections", () => {
   ["product", "architecture", "evidence", "integrations", "security", "roadmap"].forEach((id) => {
     assert.match(indexHtml, new RegExp(`id="${id}"`), `index should have section #${id}`);
   });
@@ -36,7 +36,7 @@ test("primary CTA routes through the existing contact page", () => {
 });
 
 test("the canonical contact address is preserved and unchanged", () => {
-  const email = "mndesystems@gmail.com";
+  const email = "contact@mndesystems.com";
   assert.ok(siteJs.includes(email), "site.js retains the contact email");
   assert.ok(contactHtml.includes(`mailto:${email}`), "contact form routes to the existing address");
   // No alternative contact address was introduced.
@@ -55,15 +55,23 @@ test("pages contain no CSP-violating inline scripts, styles, or handlers", () =>
   const htmlFiles = fs
     .readdirSync(root)
     .filter((f) => f.endsWith(".html"))
-    .concat(["blog/determinism-in-distributed-systems.html", "blog/the-cost-of-retries.html", "blog/why-post-execution-alerts-fail.html"]);
+    .concat(
+      fs
+        .readdirSync(path.join(root, "blog"))
+        .filter((f) => f.endsWith(".html"))
+        .map((f) => `blog/${f}`)
+    );
 
   htmlFiles.forEach((file) => {
     const html = read(file);
     assert.ok(!/\sstyle="/.test(html), `${file} must not use inline style attributes`);
     assert.ok(!/\son[a-z]+="/.test(html), `${file} must not use inline event handlers`);
-    // <script> tags must only reference external src, never inline code.
+    // <script> tags must only reference external src, never inline executable
+    // code. JSON-LD (type="application/ld+json") is inert structured data, not
+    // script, and is permitted under script-src 'self'.
     const scripts = html.match(/<script\b[^>]*>([\s\S]*?)<\/script>/gi) || [];
     scripts.forEach((tag) => {
+      if (/type\s*=\s*"application\/ld\+json"/i.test(tag)) return;
       const body = tag.replace(/<script\b[^>]*>/i, "").replace(/<\/script>/i, "").trim();
       assert.equal(body, "", `${file} must not contain inline script bodies`);
     });

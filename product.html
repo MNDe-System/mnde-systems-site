@@ -3,24 +3,71 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="refresh" content="0; url=index.html#product" />
-    <link rel="canonical" href="index.html#product" />
-    <meta name="robots" content="noindex" />
-    <title>Redirecting | MNDe</title>
+    <meta
+      name="description"
+      content="Explore the MNDe system: Preflight validation, Orbit decision plane, ARM authorized execution, and RAM0NA evidence. Request examples, decisions, and hashes for each."
+    />
+    <meta name="theme-color" content="#05070d" />
+    <link rel="canonical" href="https://mndesystems.com/product.html" />
+    <title>Product | MNDe</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/svg+xml" href="assets/img/mnde-mark.svg" />
     <link rel="stylesheet" href="assets/css/site.css" />
+    <script defer src="assets/js/analytics.js"></script>
+    <script defer src="assets/js/api.js"></script>
+    <script defer src="assets/js/product.js"></script>
+    <script defer src="assets/js/site.js"></script>
   </head>
   <body data-page="product">
+    <a class="skip-link" href="#main">Skip to content</a>
     <div class="site-shell">
+      <header class="site-header" data-include="header"></header>
       <main id="main" class="page-main">
         <section class="page-hero">
+          <div class="container reveal">
+            <p class="eyebrow">Product</p>
+            <h1>One boundary, four parts.</h1>
+            <p class="lead">
+              A request travels User → Preflight → Orbit → ARM → Execution, with evidence emitted
+              alongside. Select a component to see its real request example and what it decides.
+            </p>
+            <div class="flow reveal delay-1" role="list" aria-label="Architecture path">
+              <div class="flow-node" role="listitem"><span class="flow-index">01</span><strong>User</strong><span class="flow-role">Agent intent</span></div>
+              <span class="flow-arrow" aria-hidden="true">→</span>
+              <div class="flow-node flow-node-accent" role="listitem"><span class="flow-index">02</span><strong>Preflight</strong><span class="flow-role">Validation</span></div>
+              <span class="flow-arrow" aria-hidden="true">→</span>
+              <div class="flow-node" role="listitem"><span class="flow-index">03</span><strong>Orbit</strong><span class="flow-role">Decision</span></div>
+              <span class="flow-arrow" aria-hidden="true">→</span>
+              <div class="flow-node" role="listitem"><span class="flow-index">04</span><strong>ARM</strong><span class="flow-role">Execute / refuse</span></div>
+              <span class="flow-arrow" aria-hidden="true">→</span>
+              <div class="flow-node" role="listitem"><span class="flow-index">05</span><strong>Execution</strong><span class="flow-role">Exact action only</span></div>
+            </div>
+            <p class="invariant mt-2">No execution without validation: <span>Preflight must pass before Orbit decides, and ARM runs only what Orbit allowed.</span></p>
+          </div>
+        </section>
+
+        <section class="section">
           <div class="container">
-            <p class="eyebrow">Redirecting</p>
-            <h1>Product</h1>
-            <p class="lead">This page has moved. If you are not redirected automatically,
-              <a class="inline-link" href="index.html#product">continue to Product</a>.</p>
+            <div class="section-heading reveal">
+              <p class="eyebrow">System explorer</p>
+              <h2>Select a component.</h2>
+            </div>
+            <div id="product-explorer" class="selector reveal"></div>
+          </div>
+        </section>
+
+        <section class="section section-muted">
+          <div class="container reveal">
+            <p class="lead">See the decision plane run: <a class="inline-link" href="examples.html">Examples →</a> · <a class="inline-link" href="proof.html">Proof →</a></p>
           </div>
         </section>
       </main>
+      <footer class="site-footer" data-include="footer"></footer>
     </div>
   </body>
 </html>

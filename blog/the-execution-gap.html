@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="A standing permission is a broad, ambient claim. Execution is a single specific act. The reliable question is not whether an actor had permission, but whether this act was authorized — at the act."
+    />
+    <meta name="theme-color" content="#111416" />
+    <title>The execution gap: "it had permission" is the wrong question | MNDe</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/svg+xml" href="../assets/img/mnde-mark.svg" />
+    <link rel="stylesheet" href="../assets/css/site.css" />
+    <script defer src="../assets/js/analytics.js"></script>
+    <script defer src="../assets/js/site.js"></script>
+  </head>
+  <body data-page="blog">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="site-shell">
+      <header class="site-header" data-include="header"></header>
+      <main id="main" class="page-main">
+        <article class="section">
+          <div class="container container-narrow reveal">
+            <p class="eyebrow">Authorization model · 2026-07-31</p>
+            <h1>The execution gap: "it had permission" is the wrong question</h1>
+            <p class="lead">
+              After an incident, the first question is usually "did the actor have permission?" It is
+              the wrong question. A standing permission is a broad claim about a category of actions.
+              An execution is one specific act. The gap between them is where the damage lives.
+            </p>
+
+            <div class="copy-block article-copy">
+              <p>
+                Permissions are ambient. Once granted, they hover over every future request an actor
+                might make, waiting to be exercised. They are also coarse by necessity: we grant the
+                permission to "deploy," or "merge," or "transfer," because enumerating every specific
+                deploy, merge, or transfer in advance is impossible. So the permission describes a
+                shape, and any action that fits the shape is allowed to proceed.
+              </p>
+              <p>
+                Execution is the opposite. It is not a category; it is a single, concrete event with
+                exact parameters — this commit, this amount, this recipient, at this moment. When we
+                authorize the category and let the executor pick the instance, we have authorized the
+                shape and trusted the actor to fill it in honestly. That trust is the execution gap.
+              </p>
+
+              <h2>The gap is invisible until it is exploited</h2>
+              <p>
+                For a careful human, the gap rarely opens. People fill in the instance the way we
+                expected, most of the time. But the gap is structural, not behavioral — it exists
+                whether or not anyone walks through it. An agent that is confused, adversarial, or
+                simply optimizing against a proxy metric will fill in an instance we never intended,
+                and every layer that checked "did it have permission" will answer yes. The
+                permission was real. The instance was wrong. Both are true at once.
+              </p>
+
+              <h2>Authorize the act, at the act</h2>
+              <p>
+                The fix is to move the authorization decision from the category to the instance, and
+                from provisioning time to execution time. Instead of a standing permission consulted
+                loosely as actions flow, the actor must obtain authority for the specific action it
+                is about to perform, and present that authority at the moment of execution. The
+                executor does not fill in the instance; the instance is bound into the grant before
+                the executor is allowed to act.
+              </p>
+              <p>
+                Binding is what closes the gap. In MNDe a grant carries a canonical digest of the
+                exact parameters. The executor validates the presented grant against the action in
+                front of it, and any mismatch — a different commit, a mutated field — produces a
+                refusal before the provider is contacted. There is no "close enough." The authorized
+                act and the executed act are the same act, or nothing happens.
+              </p>
+
+              <p class="invariant">
+                Do not ask whether the actor had permission. Ask whether
+                <span>this exact act carries valid, specific, unconsumed authority</span> — and check
+                it at the act, not before it.
+              </p>
+
+              <h2>Honest about where enforcement lives</h2>
+              <p>
+                Closing the gap on paper is easy; closing it in production is a systems problem. The
+                binding and refusal logic is implemented and demonstrable. The harder property — that
+                the executor is the <em>only</em> path to the consequential action, so an agent cannot
+                skip the grant and call the provider directly — is target architecture. It holds only
+                when provider permissions, credential custody, and network boundaries are arranged so
+                that the protected executor identity is the sole accepted caller. Until a deployment
+                establishes that, non-bypassability is a design goal, and we label it as one.
+              </p>
+              <p>
+                None of this makes standing permissions useless. They still gate who may request
+                authority at all. But permission is the outer wall, not the lock on the door.
+                Authorization that fires at the moment of execution, bound to the exact act, is the
+                lock — and it is the part that fails safely when the actor is not a person.
+              </p>
+            </div>
+
+            <nav class="post-nav" aria-label="Related posts">
+              <a class="post-nav-link" href="capability-not-identity.html">
+                <span>Related</span>
+                <strong>Capability, not identity, is the unit of machine trust</strong>
+              </a>
+              <a class="post-nav-link" href="single-use-by-default.html">
+                <span>Related</span>
+                <strong>Single-use by default: authority that cannot be replayed</strong>
+              </a>
+            </nav>
+
+            <div class="post-cta">
+              <p>
+                The pilot demonstrates the execution gap being closed on a real GitHub merge: mutate
+                the action and it is refused before any provider call.
+              </p>
+              <a class="button button-primary" href="../contact.html">Request a technical pilot</a>
+            </div>
+          </div>
+        </article>
+      </main>
+      <footer class="site-footer" data-include="footer"></footer>
+    </div>
+  </body>
+</html>

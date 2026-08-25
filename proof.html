@@ -3,24 +3,107 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="refresh" content="0; url=index.html#evidence" />
-    <link rel="canonical" href="index.html#evidence" />
-    <meta name="robots" content="noindex" />
-    <title>Redirecting | MNDe</title>
+    <meta
+      name="description"
+      content="Verify MNDe determinism: ten identical /api/simulate calls, matching decision hashes, decision replay, and a downloadable proof bundle with a published SHA-256."
+    />
+    <meta name="theme-color" content="#05070d" />
+    <link rel="canonical" href="https://mndesystems.com/proof.html" />
+    <title>Proof | MNDe</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/svg+xml" href="assets/img/mnde-mark.svg" />
     <link rel="stylesheet" href="assets/css/site.css" />
+    <script defer src="assets/js/analytics.js"></script>
+    <script defer src="assets/js/api.js"></script>
+    <script defer src="assets/js/site.js"></script>
+    <script defer src="assets/js/proof.js"></script>
   </head>
-  <body data-page="product">
+  <body data-page="proof">
+    <a class="skip-link" href="#main">Skip to content</a>
     <div class="site-shell">
+      <header class="site-header" data-include="header"></header>
       <main id="main" class="page-main">
         <section class="page-hero">
+          <div class="container reveal">
+            <p class="eyebrow">Proof</p>
+            <h1>Evidence you can verify.</h1>
+            <p class="lead">
+              Determinism is not a slogan here — you can test it. Run the real endpoint, compare
+              hashes, replay a decision, and download a signed bundle whose checksum is published.
+            </p>
+          </div>
+        </section>
+
+        <section class="section">
           <div class="container">
-            <p class="eyebrow">Redirecting</p>
-            <h1>Evidence</h1>
-            <p class="lead">This page has moved. If you are not redirected automatically,
-              <a class="inline-link" href="index.html#evidence">continue to Evidence</a>.</p>
+            <div class="section-heading reveal">
+              <p class="eyebrow">Determinism</p>
+              <h2>Ten identical requests, one hash.</h2>
+              <p class="lead">Calls <code>/api/simulate</code> ten times with identical input. PASS only if every returned decision hash matches.</p>
+            </div>
+            <div id="determinism" class="proof-block reveal"></div>
+          </div>
+        </section>
+
+        <section class="section section-muted">
+          <div class="container">
+            <div class="section-heading reveal">
+              <p class="eyebrow">Replay</p>
+              <h2>Re-run a recorded decision.</h2>
+              <p class="lead">Edit the sample or paste your own decision JSON, then replay it. MATCH only if the recomputed decision hash equals the recorded one.</p>
+            </div>
+            <div class="proof-block reveal">
+              <label class="proof-label" for="replay-json">Decision JSON</label>
+              <textarea id="replay-json" class="proof-json" rows="12" spellcheck="false" aria-label="Decision JSON to replay"></textarea>
+              <div id="replay"></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="container">
+            <div class="section-heading reveal">
+              <p class="eyebrow">Sample decision</p>
+              <h2>What a signed decision looks like.</h2>
+            </div>
+            <pre id="sample-json" class="code-pane reveal" aria-label="Sample decision JSON">Loading live sample…</pre>
+          </div>
+        </section>
+
+        <section class="section section-muted">
+          <div class="container">
+            <div class="section-heading reveal">
+              <p class="eyebrow">Proof bundle</p>
+              <h2>Download and check it yourself.</h2>
+              <p class="lead">A ZIP of deterministic, internally consistent artifacts: manifest, drift, parity, replay, and a sample decision.</p>
+            </div>
+            <div class="proof-block reveal">
+              <p><a class="button button-primary" href="/proof-bundle.zip" download data-track-group="cta" data-track-label="Download proof bundle">Download proof bundle (.zip)</a></p>
+              <div class="sim-row">
+                <span class="sim-key">SHA-256</span>
+                <code class="sim-hash" id="bundle-checksum">computing…</code>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="container reveal">
+            <p class="disclaimer">
+              These artifacts are tamper-evident against a single store: an altered receipt fails
+              verification. They are not, on their own, tamper-resistant against a store that lies by
+              omission — that requires witnessing and a transparency log, which are target architecture.
+              See <a class="inline-link" href="blog/evidence-you-can-verify.html">Evidence you can verify without trusting us</a>.
+            </p>
           </div>
         </section>
       </main>
+      <footer class="site-footer" data-include="footer"></footer>
     </div>
   </body>
 </html>

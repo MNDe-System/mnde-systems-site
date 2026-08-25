@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Two linked receipts — what was authorized and what was executed — verifiable offline against published keys. Honest about the difference between tamper-evidence and tamper-resistance."
+    />
+    <meta name="theme-color" content="#111416" />
+    <title>Evidence you can verify without trusting us | MNDe</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/svg+xml" href="../assets/img/mnde-mark.svg" />
+    <link rel="stylesheet" href="../assets/css/site.css" />
+    <script defer src="../assets/js/analytics.js"></script>
+    <script defer src="../assets/js/site.js"></script>
+  </head>
+  <body data-page="blog">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="site-shell">
+      <header class="site-header" data-include="header"></header>
+      <main id="main" class="page-main">
+        <article class="section">
+          <div class="container container-narrow reveal">
+            <p class="eyebrow">Evidence · 2026-06-26</p>
+            <h1>Evidence you can verify without trusting us</h1>
+            <p class="lead">
+              Evidence that only means something if you trust the party who produced it is not
+              evidence. The point of a receipt is that a third party can check it independently,
+              offline, against keys they already hold — without taking our word for anything.
+            </p>
+
+            <div class="copy-block article-copy">
+              <p>
+                Audit logs are usually a matter of trust. The system tells you what it did, you read
+                the log, and you believe it — because inspecting the claim would mean trusting the
+                same system that made it. That circularity is fine until the moment it matters, which
+                is exactly when the system is compromised, mistaken, or under dispute. At that moment
+                a self-attested log is worth very little.
+              </p>
+
+              <h2>Two receipts, cryptographically linked</h2>
+              <p>
+                MNDe emits two independently signed records for a consequential action. The
+                authorization receipt states what was authorized: MNDe authorized execution X under
+                policy P using grant G. The execution receipt states what happened: executor Y used
+                grant G for execution X and observed result Z. The two are bound together by shared
+                identifiers — the execution id, the grant hash, and the result hash — so that neither
+                can be quietly swapped for a different story. One says what was permitted; the other
+                says what was done; together they say whether those two agree.
+              </p>
+
+              <h2>Verifiable offline, against published keys</h2>
+              <p>
+                The design goal that makes these receipts useful is independent verification. A
+                verifier fetches the published issuer and executor keys once, and from then on can
+                check any receipt without contacting us — no live service, no privileged access, no
+                trust in MNDe's availability or honesty at verification time. The signatures either
+                validate against the published trust roots or they do not. A broken link or an invalid
+                signature fails verification outright. This is what "without trusting us" means in
+                practice: the check does not route through us.
+              </p>
+
+              <p class="invariant">
+                The test of evidence is not whether we vouch for it, but whether
+                <span>anyone can verify it offline against published keys</span> and reach the same
+                conclusion.
+              </p>
+
+              <h2>Tamper-evident is not tamper-proof</h2>
+              <p>
+                Precision matters here, and it is easy to oversell. Signed, linked receipts are
+                tamper-<em>evident</em>: alter a receipt and its signature no longer validates, so the
+                tampering is detectable. They are not tamper-<em>resistant</em> in the strong sense —
+                nothing in a signature stops someone who controls the store from deleting a receipt
+                entirely, or from presenting one honest history to you and a different one to someone
+                else. Detecting a deletion or a split view requires more than signatures.
+              </p>
+              <p>
+                That "more" is transparency infrastructure: independent witnesses and a transparency
+                log that provide inclusion and consistency proofs, so a single party cannot show two
+                different versions of the record without being caught. In MNDe this is target
+                architecture. The receipts and their offline verification are implemented as a
+                limited, demonstrable capability; witnessing and log inclusion are not yet deployed,
+                and until they are, we describe the guarantee as tamper-evidence against a single
+                store, not as protection against a store that lies by omission.
+              </p>
+
+              <h2>Why be this careful</h2>
+              <p>
+                Because the entire value of verifiable evidence collapses the first time a claim turns
+                out to be softer than it sounded. A receipt that says more than it can prove is worse
+                than no receipt, since it invites reliance it cannot support. Stating exactly what is
+                implemented, what is limited, and what is still target is not modesty — it is what
+                makes the evidence trustworthy in the only way that counts: by being checkable.
+              </p>
+            </div>
+
+            <nav class="post-nav" aria-label="Related posts">
+              <a class="post-nav-link" href="single-use-by-default.html">
+                <span>Related</span>
+                <strong>Single-use by default: authority that cannot be replayed</strong>
+              </a>
+              <a class="post-nav-link" href="many-agents.html">
+                <span>Related</span>
+                <strong>Preparing for a world of many agents</strong>
+              </a>
+            </nav>
+
+            <div class="post-cta">
+              <p>
+                The pilot produces linked authorization and execution receipts you can verify offline
+                against published keys — no trust in us required.
+              </p>
+              <a class="button button-primary" href="../contact.html">Request a technical pilot</a>
+            </div>
+          </div>
+        </article>
+      </main>
+      <footer class="site-footer" data-include="footer"></footer>
+    </div>
+  </body>
+</html>
