@@ -67,7 +67,7 @@ function renderHeader() {
   header.innerHTML = `
     <div class="container nav-shell">
       <a class="brand" href="${basePath}index.html" aria-label="MNDe home">
-        <img class="brand-logo" src="${basePath}assets/img/mnde-mark.svg" width="64" height="40" alt="" aria-hidden="true" />
+        <img class="brand-logo" src="${basePath}assets/img/mnde-mark.svg?v=20260907-logo2" width="64" height="64" alt="" aria-hidden="true" />
         <span class="brand-text">
           <strong>MNDe</strong>
           <span>Machine-authorization infrastructure</span>
@@ -125,7 +125,7 @@ function renderFooter() {
   footer.innerHTML = `
     <div class="container footer-shell">
       <div class="footer-brand">
-        <img class="footer-lockup" src="${basePath}assets/img/mnde-lockup.svg" width="700" height="210" alt="MNDe — Every execution. Verified." />
+        <img class="footer-lockup" src="${basePath}assets/img/mnde-lockup.svg?v=20260907-logo2" width="700" height="210" alt="MNDe — Every execution. Verified." />
         <span>Authority before execution. No consequential machine action executes without valid, specific, unconsumed authority for that exact action.</span>
         <span class="footer-contact"><a href="mailto:${CONTACT_EMAIL}">${CONTACT_EMAIL}</a></span>
       </div>

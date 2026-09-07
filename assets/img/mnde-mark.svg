@@ -1,6 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 40" fill="none" role="img" aria-label="MNDe">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" role="img" aria-label="MNDe">
   <title>MNDe</title>
-  <polygon points="9.5,8.74 22.5,8.74 29,20 22.5,31.26 9.5,31.26 3,20" fill="#1a56f0"/>
-  <path d="M35 20 H54" stroke="#1a56f0" stroke-width="4.5"/>
-  <path d="M49 11.5 L58.5 20 L49 28.5" stroke="#1a56f0" stroke-width="4.5" stroke-linejoin="miter"/>
+  <rect width="64" height="64" rx="17" fill="#080b0e"/>
+  <g stroke="#f2f4f7" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 19 H14 L24 29 M5 27 H14 L21 33 M5 37 H14 L21 31 M5 45 H14 L24 35"/>
+    <path d="M25 24 H35 L41 32 L35 40 H25 L19 32 Z" fill="#080b0e"/>
+  </g>
+  <path d="M42 32 H57 M52 27 L57 32 L52 37" stroke="#245bff" stroke-width="2.8" stroke-linecap="square" stroke-linejoin="miter"/>
 </svg>
