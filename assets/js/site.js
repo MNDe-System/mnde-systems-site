@@ -14,7 +14,7 @@ const navItems = [
   { id: "contact", label: "Contact", href: "contact.html" }
 ];
 
-const CONTACT_EMAIL = "mndesystems@gmail.com";
+const CONTACT_EMAIL = "contact@mndesystems.com";
 
 function getBasePath() {
   return window.location.pathname.includes("/blog/") ? "../" : "";

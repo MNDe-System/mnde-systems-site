@@ -36,7 +36,7 @@ test("primary CTA routes through the existing contact page", () => {
 });
 
 test("the canonical contact address is preserved and unchanged", () => {
-  const email = "mndesystems@gmail.com";
+  const email = "contact@mndesystems.com";
   assert.ok(siteJs.includes(email), "site.js retains the contact email");
   assert.ok(contactHtml.includes(`mailto:${email}`), "contact form routes to the existing address");
   // No alternative contact address was introduced.
