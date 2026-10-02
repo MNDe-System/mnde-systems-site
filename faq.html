@@ -50,7 +50,12 @@
             "@type": "Question",
             "name": "What happens when I submit the contact form?",
             "acceptedAnswer": { "@type": "Answer", "text": "Your request is validated and sanitized, then queued and routed for review, returning a real request ID and timestamp. If the mail provider is not configured or sending fails, you get an explicit error — never a fake success." }
-          }
+          },
+          {"@type": "Question", "name": "Is MNDe production-ready?", "acceptedAnswer": {"@type": "Answer", "text": "Not yet, and we say so. MNDe is pre-1.0: v1.0 is not tagged, and finding F-001 (replay-safe, single-use authority in production) is not closed. The reference implementation is built and tested; the first typed production effect, git.push, has not yet been operated end to end with production trust."}},
+          {"@type": "Question", "name": "What does ALLOW mean?", "acceptedAnswer": {"@type": "Answer", "text": "That policy approved the request. It never means the action ran, and outside the typed git.push path it does not authorize execution: generic protected execution is on hold, and decision receipts say so in their signed body."}},
+          {"@type": "Question", "name": "What is the first production effect?", "acceptedAnswer": {"@type": "Answer", "text": "git.push. MNDe moves one branch on one remote from one exact commit to another, using an argv it builds itself with --force-with-lease, no shell, and no caller-supplied flags. Every field must match the signed authorization, the authority is consumed once in a durable claim store, and signed evidence reports EXECUTED only if the remote reads back the approved commit."}},
+          {"@type": "Question", "name": "What happens if the power fails?", "acceptedAnswer": {"@type": "Answer", "text": "Restart recovery is tested; power loss is a documented known limitation for v1.0, not a closed question. In production, sustained power continuity (a UPS or generator) is the operator's responsibility, outside MNDe."}},
+          {"@type": "Question", "name": "Can MNDe verify my GitHub branch protection offline?", "acceptedAnswer": {"@type": "Answer", "text": "No. Branch protection and required reviews live in GitHub's settings, outside MNDe. MNDe does not produce a receipt for them and does not claim to verify them offline. Its offline verification covers its own receipts and evidence."}}
         ]
       }
     </script>
@@ -104,6 +109,42 @@
                 <div class="faq-body">
                   <p>Your request is validated and sanitized, then queued and routed for review, returning a real request ID and timestamp. If mail is not configured or sending fails, you get an explicit error — never a fake success.</p>
                   <p><a class="button button-secondary button-sm" href="contact.html">Open the contact form</a></p>
+                </div>
+              </details>
+
+              <details class="faq-item">
+                <summary>Is MNDe production-ready?</summary>
+                <div class="faq-body">
+                  <p>Not yet, and we say so. MNDe is pre-1.0: v1.0 is not tagged, and finding F-001 (replay-safe, single-use authority in production) is not closed. The reference implementation is built and tested; the first typed production effect, <code>git.push</code>, has not yet been operated end to end with production trust.</p>
+                  <p><a class="button button-secondary button-sm" href="status.html">Read the status</a></p>
+                </div>
+              </details>
+              <details class="faq-item">
+                <summary>What does ALLOW mean?</summary>
+                <div class="faq-body">
+                  <p>That policy approved the request. It never means the action ran, and outside the typed <code>git.push</code> path it does not authorize execution: generic protected execution is on hold, and decision receipts say so in their signed body.</p>
+                  <p><a class="button button-secondary button-sm" href="status.html">See what is on hold</a></p>
+                </div>
+              </details>
+              <details class="faq-item">
+                <summary>What is the first production effect?</summary>
+                <div class="faq-body">
+                  <p><code>git.push</code>. MNDe moves one branch on one remote from one exact commit to another, using an argv it builds itself with <code>--force-with-lease</code>, no shell, and no caller-supplied flags. Every field must match the signed authorization, the authority is consumed once in a durable claim store, and signed evidence reports EXECUTED only if the remote reads back the approved commit.</p>
+                  <p><a class="button button-secondary button-sm" href="index.html#git-push">See the git.push contract</a></p>
+                </div>
+              </details>
+              <details class="faq-item">
+                <summary>What happens if the power fails?</summary>
+                <div class="faq-body">
+                  <p>Restart recovery is tested; power loss is a documented known limitation for v1.0, not a closed question. In production, sustained power continuity (a UPS or generator) is the operator's responsibility, outside MNDe.</p>
+                  <p><a class="button button-secondary button-sm" href="status.html">Read the known limitations</a></p>
+                </div>
+              </details>
+              <details class="faq-item">
+                <summary>Can MNDe verify my GitHub branch protection offline?</summary>
+                <div class="faq-body">
+                  <p>No. Branch protection and required reviews live in GitHub's settings, outside MNDe. MNDe does not produce a receipt for them and does not claim to verify them offline. Its offline verification covers its own receipts and evidence.</p>
+                  <p><a class="button button-secondary button-sm" href="status.html">Read what we do not claim</a></p>
                 </div>
               </details>
             </div>

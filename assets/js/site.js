@@ -11,10 +11,21 @@ const navItems = [
   { id: "examples", label: "Examples", href: "examples.html" },
   { id: "blog", label: "Blog", href: "blog.html" },
   { id: "faq", label: "FAQ", href: "faq.html" },
+  { id: "status", label: "Status", href: "status.html" },
   { id: "contact", label: "Contact", href: "contact.html" }
 ];
 
 const CONTACT_EMAIL = "contact@mndesystems.com";
+const SOURCE_URL = "https://github.com/MNDe-System/mnde-public-test";
+
+// Footer "Evidence" column: where a reader goes to check claims.
+const evidenceLinks = [
+  { label: "Implementation status", href: "status.html" },
+  { label: "Evidence Lab", href: "index.html#evidence" },
+  { label: "Proof bundle", href: "proof.html" },
+  { label: "Reference implementation", href: SOURCE_URL, external: true },
+  { label: "Known issues", href: `${SOURCE_URL}/blob/main/docs/KNOWN-ISSUES.md`, external: true }
+];
 
 function getBasePath() {
   return window.location.pathname.includes("/blog/") ? "../" : "";
@@ -96,6 +107,14 @@ function renderHeader() {
     }
     nav.appendChild(link);
   });
+  // The header CTA is hidden on narrow screens; the open menu carries it instead.
+  nav.appendChild(el("a", {
+    href: `${basePath}contact.html`,
+    class: "button button-primary button-sm nav-menu-cta",
+    "data-track-group": "cta",
+    "data-track-label": "Request a technical pilot",
+    text: "Request a technical pilot"
+  }));
 
   const toggle = header.querySelector(".nav-toggle");
   toggle?.addEventListener("click", () => {
@@ -120,6 +139,11 @@ function renderFooter() {
   const footerNav = navItems
     .map((item) => `<a href="${basePath}${item.href}">${item.label}</a>`)
     .join("");
+  const evidenceNav = evidenceLinks
+    .map((item) => item.external
+      ? `<a href="${item.href}" rel="noopener">${item.label}</a>`
+      : `<a href="${basePath}${item.href}">${item.label}</a>`)
+    .join("");
 
   footer.innerHTML = `
     <div class="container footer-shell">
@@ -128,10 +152,20 @@ function renderFooter() {
         <span>Authority before execution. No consequential machine action executes without valid, specific, unconsumed authority for that exact action.</span>
         <span class="footer-contact"><a href="mailto:${CONTACT_EMAIL}">${CONTACT_EMAIL}</a></span>
       </div>
-      <nav class="footer-nav" aria-label="Footer">${footerNav}</nav>
+      <div class="footer-columns">
+        <div class="footer-col">
+          <p class="footer-heading">Site</p>
+          <nav class="footer-nav" aria-label="Footer">${footerNav}</nav>
+        </div>
+        <div class="footer-col">
+          <p class="footer-heading">Evidence</p>
+          <nav class="footer-nav" aria-label="Evidence">${evidenceNav}</nav>
+        </div>
+      </div>
     </div>
     <div class="container footer-legal">
       <span>&copy; ${year} MNDe. Machine-authorization infrastructure.</span>
+      <a class="footer-status" href="${basePath}status.html"><span class="status-pill-dot" aria-hidden="true"></span>Pre-1.0 · production-verified claims: 0</a>
     </div>
   `;
 }

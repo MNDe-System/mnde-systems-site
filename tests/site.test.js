@@ -13,7 +13,7 @@ const indexHtml = read("index.html");
 const contactHtml = read("contact.html");
 
 test("primary navigation exposes the expected routes", () => {
-  ["Product", "How it works", "Proof", "Examples", "Blog", "FAQ", "Contact"].forEach((label) => {
+  ["Product", "How it works", "Proof", "Examples", "Blog", "FAQ", "Status", "Contact"].forEach((label) => {
     assert.ok(siteJs.includes(`label: "${label}"`), `nav should include ${label}`);
   });
 });
@@ -76,4 +76,33 @@ test("pages contain no CSP-violating inline scripts, styles, or handlers", () =>
       assert.equal(body, "", `${file} must not contain inline script bodies`);
     });
   });
+});
+
+test("status page is built, mapped, and states the open findings", () => {
+  const status = read("status.html");
+  assert.ok(read("scripts/build.mjs").includes('"status.html"'), "build copies status.html");
+  assert.ok(read("sitemap.xml").includes("https://mndesystems.com/status.html"), "sitemap lists status.html");
+  assert.match(status, /v1\.0 not tagged/);
+  assert.match(status, /F-001/);
+  assert.match(status, /Not closed/);
+  assert.match(indexHtml, /id="status"/, "home page carries the status summary");
+  assert.match(indexHtml, /id="git-push"/, "home page carries the git.push section");
+});
+
+test("no page claims F-001 is closed or that anything is production verified", () => {
+  const pages = fs.readdirSync(root).filter((f) => f.endsWith(".html"));
+  pages.forEach((file) => {
+    const text = read(file).replace(/<[^>]+>/g, " ");
+    // Quoted in the status page's list of claims MNDe will not make.
+    const unquoted = text.replace(/“[^”]*”/g, "");
+    assert.ok(!/F-001 is closed/i.test(unquoted), `${file} must not claim F-001 is closed`);
+    assert.ok(!/\bis production verified\b/i.test(unquoted), `${file} must not claim production verification`);
+  });
+});
+
+test("the demo decision is never described as signed", () => {
+  const proofHtml = read("proof.html");
+  assert.ok(!/signed hashes/.test(indexHtml), "simulator copy does not claim signed hashes");
+  assert.ok(!/signed decision looks like/.test(proofHtml));
+  assert.ok(!read("assets/js/proof.js").includes('"ES256:"'), "proof.js does not fabricate a signature");
 });

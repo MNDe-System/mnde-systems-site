@@ -34,7 +34,7 @@
             <h1>Evidence you can verify.</h1>
             <p class="lead">
               Determinism is not a slogan here — you can test it. Run the real endpoint, compare
-              hashes, replay a decision, and download a signed bundle whose checksum is published.
+              hashes, replay a decision, and download a deterministic bundle whose checksum is published.
             </p>
           </div>
         </section>
@@ -69,7 +69,7 @@
           <div class="container">
             <div class="section-heading reveal">
               <p class="eyebrow">Sample decision</p>
-              <h2>What a signed decision looks like.</h2>
+              <h2>What a recorded decision looks like.</h2>
             </div>
             <pre id="sample-json" class="code-pane reveal" aria-label="Sample decision JSON">Loading live sample…</pre>
           </div>
@@ -80,7 +80,7 @@
             <div class="section-heading reveal">
               <p class="eyebrow">Proof bundle</p>
               <h2>Download and check it yourself.</h2>
-              <p class="lead">A ZIP of deterministic, internally consistent artifacts: manifest, drift, parity, replay, and a sample decision.</p>
+              <p class="lead">A ZIP of deterministic, internally consistent artifacts: manifest, drift, parity, replay, and a sample decision. The drift report is produced by actually running the decision 1,000 times at build time.</p>
             </div>
             <div class="proof-block reveal">
               <p><a class="button button-primary" href="/proof-bundle.zip" download data-track-group="cta" data-track-label="Download proof bundle">Download proof bundle (.zip)</a></p>
@@ -98,6 +98,9 @@
               These artifacts are tamper-evident against a single store: an altered receipt fails
               verification. They are not, on their own, tamper-resistant against a store that lies by
               omission — that requires witnessing and a transparency log, which are target architecture.
+              The decisions on this page come from a small demonstration policy and are hashed, not
+              signed. Signed receipts are shown in the <a class="inline-link" href="index.html#evidence">Evidence Lab</a>;
+              the reference implementation signs with Ed25519.
               See <a class="inline-link" href="blog/evidence-you-can-verify.html">Evidence you can verify without trusting us</a>.
             </p>
           </div>

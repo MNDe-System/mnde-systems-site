@@ -19,7 +19,8 @@ const entriesToCopy = [
   "product.html",
   "proof.html",
   "robots.txt",
-  "sitemap.xml"
+  "sitemap.xml",
+  "status.html"
 ];
 
 async function pathExists(path) {

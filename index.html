@@ -14,6 +14,9 @@
       content="Machine-authorization infrastructure: exact-action grants, protected execution, credential dispossession, and linked, offline-verifiable evidence."
     />
     <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://mndesystems.com/" />
+    <meta property="og:site_name" content="MNDe" />
+    <meta name="twitter:card" content="summary" />
     <meta name="theme-color" content="#05070d" />
     <link rel="canonical" href="https://mndesystems.com/" />
     <title>MNDe | Stop execution before it happens</title>
@@ -52,6 +55,11 @@
         <section class="hero" id="top">
           <div class="container">
             <div class="reveal">
+              <a class="status-pill" href="status.html" data-track-group="cta" data-track-label="Status pill">
+                <span class="status-pill-dot" aria-hidden="true"></span>
+                Pre-1.0 · reference implementation open for review
+                <span class="status-pill-link">Read the status →</span>
+              </a>
               <p class="eyebrow">Machine-authorization infrastructure</p>
               <h1>Stop execution before it happens.</h1>
               <p class="lead">
@@ -96,12 +104,12 @@
               <div class="sim-panel-head">
                 <p class="eyebrow">Live decision · /api/simulate</p>
                 <h2>Would this execution be allowed?</h2>
-                <p class="muted">Adjust the request. The decision is computed server-side and returns signed hashes — the same input always returns the same result.</p>
+                <p class="muted">Adjust the request. The decision is computed server-side and returns a request hash and a decision hash — the same input always returns the same result.</p>
               </div>
               <div class="sim" data-sim data-gpu="8" data-hours="4" data-retries="1" data-cost="30" data-variant="full"></div>
               <ul class="proof-signals" aria-label="Proof signals">
                 <li><strong>0 drift</strong><span>across 1000 runs</span></li>
-                <li><strong>Cross-runtime parity</strong><span>verified</span></li>
+                <li><strong>One decision engine</strong><span>same source for Node and Workers</span></li>
               </ul>
             </div>
 
@@ -110,6 +118,13 @@
               <a class="button button-secondary" href="proof.html" data-track-group="cta" data-track-label="See the proof">See the proof</a>
               <a class="button button-secondary" href="#architecture">Inspect the architecture</a>
             </div>
+
+            <ul class="fact-strip reveal delay-2" aria-label="Engineering facts">
+              <li><strong>0</strong><span>runtime dependencies</span></li>
+              <li><strong>Ed25519</strong><span>receipt and evidence signatures</span></li>
+              <li><strong>Offline</strong><span>receipt verification against a trust anchor</span></li>
+              <li><strong>SHA-pinned</strong><span>CI actions, generated SBOM enforced by tests</span></li>
+            </ul>
 
             <p class="disclaimer reveal delay-2">
               MNDe distinguishes implemented reference components, limited paths, and target-state
@@ -223,7 +238,7 @@
 
             <div class="table-scroll reveal delay-1">
               <table class="data">
-                <caption>Illustrative exact-action grant. The Evidence Lab generates real digests and signatures in your browser.</caption>
+                <caption>Illustrative exact-action grant. The Evidence Lab generates real digests and signatures in your browser using ECDSA P-256, which every browser supports natively. The reference implementation signs receipts and evidence with Ed25519.</caption>
                 <thead>
                   <tr><th scope="col">Field</th><th scope="col">Value</th></tr>
                 </thead>
@@ -477,8 +492,64 @@
           </div>
         </section>
 
+        <!-- First typed production effect: git.push -->
+        <section class="section" id="git-push">
+          <div class="container">
+            <div class="section-heading reveal">
+              <p class="eyebrow">First typed production effect</p>
+              <h2><code class="h-code">git.push</code>: one ref, one exact move, once.</h2>
+              <p class="prose">
+                The reference implementation's first real effect moves one branch on one remote from
+                one exact commit to another, and only when a signed authorization said so and that
+                authority has not been spent. It is a typed capability, not a way to run commands.
+              </p>
+            </div>
+
+            <div class="grid grid-2 reveal delay-1">
+              <div class="code-panel">
+                <div class="code-panel-head"><span class="mono-label">The only argv MNDe will build</span><span class="badge badge-implemented">Reference</span></div>
+                <pre><span class="c"># fixed executable, fixed operation, no shell</span>
+git push --no-verify \
+  --force-with-lease=<span class="s">&lt;target-ref&gt;</span>:<span class="s">&lt;approved-old-sha&gt;</span> \
+  -- <span class="s">&lt;remote-url&gt;</span> <span class="s">&lt;approved-new-sha&gt;</span>:<span class="s">&lt;target-ref&gt;</span>
+
+<span class="c"># refused if they ever appear</span>
+<span class="k">--force  --mirror  --all  --delete  --prune</span>
+<span class="k">--receive-pack  --exec  -c &lt;config&gt;</span></pre>
+              </div>
+              <article class="card">
+                <h3>Bound to the signed authorization</h3>
+                <p>Every field must equal the value the approver signed. A request carrying an unrecognized field is refused, not ignored.</p>
+                <ul class="prose check-list">
+                  <li>Repository and remote identity, remote URL</li>
+                  <li>Source commit and expected old remote commit (full SHAs)</li>
+                  <li>Target ref, in strict <code>refs/heads/…</code> form</li>
+                  <li>Execution id, grant id, executor identity</li>
+                </ul>
+              </article>
+            </div>
+
+            <ol class="steps mt-2 reveal delay-1" aria-label="Order of checks before the push">
+              <li><strong>Verify</strong><span>Every field against the signed authorization.</span></li>
+              <li><strong>Resolve</strong><span>Source commit exists locally as a commit.</span></li>
+              <li><strong>Read remote</strong><span>Current ref equals the approved old commit, and old is an ancestor of new.</span></li>
+              <li><strong>Posture</strong><span>Production trust configuration is present.</span></li>
+              <li><strong>Claim</strong><span>Single-use authority is durably consumed.</span></li>
+              <li><strong>Push</strong><span>Only now, with a sanitized environment.</span></li>
+              <li><strong>Read back</strong><span>EXECUTED only if the remote now equals the approved commit.</span></li>
+            </ol>
+
+            <p class="disclaimer reveal delay-2">
+              Built and tested, and reachable only by a deployment that configures it. It has not yet
+              been operated end to end with production trust material, so finding F-001 is not
+              closed. See <a class="inline-link" href="status.html">Status</a> for exactly what is
+              and is not established.
+            </p>
+          </div>
+        </section>
+
         <!-- Evidence Lab -->
-        <section class="section" id="evidence">
+        <section class="section section-muted" id="evidence">
           <div class="container">
             <div class="section-heading reveal">
               <p class="eyebrow">Implementation Evidence Lab</p>
@@ -524,7 +595,7 @@
         </section>
 
         <!-- Security: threat & failure scenarios -->
-        <section class="section section-muted" id="security">
+        <section class="section" id="security">
           <div class="container">
             <div class="section-heading reveal">
               <p class="eyebrow">Attack &amp; failure scenarios</p>
@@ -543,7 +614,7 @@
         </section>
 
         <!-- Roadmap -->
-        <section class="section" id="roadmap">
+        <section class="section section-muted" id="roadmap">
           <div class="container">
             <div class="section-heading reveal">
               <p class="eyebrow">Implementation blueprint</p>
@@ -659,8 +730,70 @@
                     <td><span class="badge badge-target">Target</span></td>
                     <td>Independent witnesses</td>
                   </tr>
+                  <tr>
+                    <td>A spent grant cannot be claimed again</td>
+                    <td>PostgreSQL 16 run: 22/22 cases, one winner at 2, 8 and 32 concurrent claims</td>
+                    <td><span class="badge badge-limited">Limited</span></td>
+                    <td>Production deployment; managed providers and failover untested</td>
+                  </tr>
+                  <tr>
+                    <td><code>git.push</code> moves exactly the approved ref</td>
+                    <td>Typed argv, bound fields, signed execution evidence with read-back</td>
+                    <td><span class="badge badge-implemented">Reference</span></td>
+                    <td>One end-to-end run with production trust</td>
+                  </tr>
+                  <tr>
+                    <td>Authority survives power loss</td>
+                    <td>Hardware-level durability test</td>
+                    <td><span class="badge badge-unproven">Unproven</span></td>
+                    <td>Known limitation for v1.0; power continuity is the operator's plan</td>
+                  </tr>
                 </tbody>
               </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- Status summary -->
+        <section class="section" id="status">
+          <div class="container">
+            <div class="section-heading reveal">
+              <p class="eyebrow">Where MNDe stands</p>
+              <h2>Pre-1.0, and specific about it.</h2>
+              <p class="prose">
+                Trust infrastructure earns trust by being exact about its own state. As of
+                2026-10-02:
+              </p>
+            </div>
+            <div class="grid grid-3 reveal delay-1">
+              <article class="card">
+                <span class="badge badge-implemented">Built and tested</span>
+                <ul class="prose check-list">
+                  <li>ALLOW / REFUSE decisions with Ed25519 receipts that verify offline</li>
+                  <li>Typed <code>git.push</code> with signed execution evidence</li>
+                  <li>Production posture gate and executor-owned push credential</li>
+                </ul>
+              </article>
+              <article class="card">
+                <span class="badge badge-limited">Proven on real infrastructure</span>
+                <ul class="prose check-list">
+                  <li>Single-use claims on PostgreSQL 16, 22/22 cases</li>
+                  <li>One winner under 32-way concurrent replay</li>
+                  <li>Executor login cannot delete, update or drop claims</li>
+                </ul>
+              </article>
+              <article class="card card-open">
+                <span class="badge badge-unproven">Open</span>
+                <ul class="prose open-list">
+                  <li>F-001 is not closed; v1.0 is not tagged</li>
+                  <li>No production run of <code>git.push</code> yet</li>
+                  <li>Power loss and database restore are stated limits</li>
+                </ul>
+              </article>
+            </div>
+            <div class="cluster mt-2 reveal delay-2">
+              <a class="button button-secondary" href="status.html">Read the full status</a>
+              <a class="button button-secondary" href="https://github.com/MNDe-System/mnde-public-test" rel="noopener">Inspect the source</a>
             </div>
           </div>
         </section>
