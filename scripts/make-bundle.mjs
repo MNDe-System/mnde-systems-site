@@ -114,26 +114,37 @@ export async function buildBundle() {
     reason_codes: decision.reason_codes,
     inputs: decision.inputs,
     policy: decision.policy,
-    signature: "ES256:" + decision.decision_hash.slice(0, 32),
+    signature: null,
+    signature_note: "Unsigned. This demonstration endpoint hashes decisions but does not sign them.",
     generated_at: FIXED_TS
   };
 
+  // Measure drift rather than assert it: run the same input DRIFT_RUNS times
+  // and count distinct decision hashes.
+  const DRIFT_RUNS = 1000;
+  const seen = new Set();
+  for (let i = 0; i < DRIFT_RUNS; i++) {
+    seen.add((await simulate(sampleInput)).decision_hash);
+  }
+  const driftDetected = seen.size - 1;
+
   const driftReport = {
     report: "drift",
-    runs: 1000,
-    unique_decision_hashes: 1,
-    drift_detected: 0,
+    runs: DRIFT_RUNS,
+    unique_decision_hashes: seen.size,
+    drift_detected: driftDetected,
     decision_hash: decision.decision_hash,
-    statement: "0 drift across 1000 runs with identical input.",
+    statement: `${driftDetected} drift across ${DRIFT_RUNS} runs with identical input.`,
     generated_at: FIXED_TS
   };
 
   const parityReport = {
     report: "parity",
     runtimes: ["node", "cloudflare-workers"],
-    parity: "verified",
+    parity: "single-source",
+    measured_in: ["node"],
     decision_hash: decision.decision_hash,
-    statement: "Cross-runtime parity verified: the same decision engine runs in every runtime.",
+    statement: "One decision engine (functions/_lib/decision.js) serves both runtimes. This bundle was computed in Node; the Proof page's live determinism test exercises the deployed Workers runtime.",
     generated_at: FIXED_TS
   };
 

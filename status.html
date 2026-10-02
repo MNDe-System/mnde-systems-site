@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Where MNDe stands today: what is built and tested, what has been proven against real infrastructure, and what is still open, stated plainly with links to the evidence."
+    />
+    <meta name="theme-color" content="#05070d" />
+    <meta property="og:title" content="MNDe status: built, proven, and open" />
+    <meta property="og:description" content="A dated, evidence-linked account of MNDe's implementation state. F-001 is not closed and v1.0 is not tagged." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://mndesystems.com/status.html" />
+    <link rel="canonical" href="https://mndesystems.com/status.html" />
+    <title>Status | MNDe</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/svg+xml" href="assets/img/mnde-mark.svg" />
+    <link rel="stylesheet" href="assets/css/site.css" />
+    <script defer src="assets/js/analytics.js"></script>
+    <script defer src="assets/js/site.js"></script>
+  </head>
+  <body data-page="status">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="site-shell">
+      <header class="site-header" data-include="header"></header>
+      <main id="main" class="page-main">
+        <section class="page-hero">
+          <div class="container reveal">
+            <p class="eyebrow">Status · as of 2026-10-02</p>
+            <h1>What is built, what is proven, what is open.</h1>
+            <p class="lead">
+              MNDe is pre-1.0. This page separates three things that are easy to blur: code that
+              exists and is tested, properties demonstrated against real infrastructure, and
+              questions that are still open. The engineering records behind it are linked throughout.
+            </p>
+            <div class="status-summary mt-2" role="list" aria-label="Headline status">
+              <div class="status-tile" role="listitem">
+                <span class="status-tile-label">Release</span>
+                <strong>v1.0 not tagged</strong>
+                <span>Current package version 0.1.2</span>
+              </div>
+              <div class="status-tile status-tile-open" role="listitem">
+                <span class="status-tile-label">Finding F-001</span>
+                <strong>Not closed</strong>
+                <span>Category A: replay-safe single-use authority in production</span>
+              </div>
+              <div class="status-tile" role="listitem">
+                <span class="status-tile-label">First production effect</span>
+                <strong><code>git.push</code></strong>
+                <span>Built and tested; not yet operated with production trust</span>
+              </div>
+              <div class="status-tile" role="listitem">
+                <span class="status-tile-label">Production verified claims</span>
+                <strong>0</strong>
+                <span>The label is reserved until a production artifact supports it</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="container">
+            <div class="section-heading reveal">
+              <p class="eyebrow">Built and tested</p>
+              <h2>In the reference implementation today.</h2>
+              <p class="prose">
+                Source: <a class="inline-link" href="https://github.com/MNDe-System/mnde-public-test" rel="noopener">MNDe-System/mnde-public-test</a>.
+                Pure Node.js (24+), zero runtime dependencies, CI on Windows with SHA-pinned actions.
+              </p>
+            </div>
+            <div class="grid grid-2 reveal delay-1">
+              <article class="card">
+                <span class="badge badge-implemented">Implemented / Reference</span>
+                <h3>Decisions and signed receipts</h3>
+                <p>A caller submits an action before running it. MNDe returns ALLOW or REFUSE and writes an Ed25519-signed receipt that verifies offline against a trust anchor. An ALLOW means policy approved the request; it never means the action ran.</p>
+              </article>
+              <article class="card">
+                <span class="badge badge-implemented">Implemented / Reference</span>
+                <h3>Typed <code>git.push</code> effect</h3>
+                <p>Moves one branch on one remote from one exact commit to another, only when a signed authorization says so. MNDe builds the argv itself; there is no shell and no caller-supplied flag or refspec.</p>
+              </article>
+              <article class="card">
+                <span class="badge badge-implemented">Implemented / Reference</span>
+                <h3>Signed execution evidence</h3>
+                <p>A separate evidence record, signed by the executor's own key, reports EXECUTED only when the remote ref read back after the push equals the approved commit. It is a different schema from the decision receipt, so neither can stand in for the other.</p>
+              </article>
+              <article class="card">
+                <span class="badge badge-implemented">Implemented / Reference</span>
+                <h3>Production posture gate</h3>
+                <p>With <code>MNDE_PROFILE=production</code>, the executor refuses to start unless an authority bundle, a pinned root fingerprint, an executor id and an environment id are configured. It never falls back to the demo authority.</p>
+              </article>
+              <article class="card">
+                <span class="badge badge-implemented">Implemented / Reference</span>
+                <h3>Executor-owned push credential</h3>
+                <p>The executor obtains its own push credential, scoped to an allowlist of repositories, and hands it only to the git processes that talk to the remote. The caller never sees it.</p>
+              </article>
+              <article class="card">
+                <span class="badge badge-limited">Limited</span>
+                <h3>Generic execution is on hold</h3>
+                <p>Outside the typed <code>git.push</code> path, protected execution is disabled in the executor and the MCP proxy. Decision receipts say so in their signed body (<code>execution_status: "DISABLED"</code>).</p>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section class="section section-muted">
+          <div class="container">
+            <div class="section-heading reveal">
+              <p class="eyebrow">Proven against real infrastructure</p>
+              <h2>Single-use authority, measured on a real database.</h2>
+              <p class="prose">
+                The claim store that makes an authorization single-use was run against PostgreSQL
+                16.13 with fsync on, verified TLS, and a restricted non-owner login.
+              </p>
+            </div>
+            <div class="metric-row reveal delay-1" role="list" aria-label="Claim store results">
+              <div class="metric" role="listitem"><strong>22 / 22</strong><span>cases passed with the adapter unmodified</span></div>
+              <div class="metric" role="listitem"><strong>1 winner</strong><span>at 2, 8 and 32 concurrent claims of one grant</span></div>
+              <div class="metric" role="listitem"><strong>Refused</strong><span>a spent grant reused under a new execution id</span></div>
+              <div class="metric" role="listitem"><strong>Denied</strong><span>DELETE, UPDATE, TRUNCATE and DROP by the executor login</span></div>
+            </div>
+            <p class="disclaimer reveal delay-2">
+              What this does not establish: it does not close F-001. Restart is not power loss. No
+              managed database provider and no failover were tested. "The executor cannot roll the
+              claim store back" is not "nobody can": whoever owns the database can restore a backup.
+              <a class="inline-link" href="https://github.com/MNDe-System/mnde-public-test/blob/main/docs/F001-CLAIM-STORE-PROOF.md" rel="noopener">Read the full proof record</a>.
+            </p>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="container">
+            <div class="section-heading reveal">
+              <p class="eyebrow">F-001 · the nine questions</p>
+              <h2>Can one authorization cause more than one effect?</h2>
+              <p class="prose">
+                F-001 is the finding that blocks a production execution claim. It is assessed as nine
+                questions against the real <code>git.push</code> path. Six are established; it is
+                still not closed, because a correct design that has never been operated end to end
+                with production trust is not a closed finding.
+              </p>
+            </div>
+            <div class="table-scroll reveal delay-1">
+              <table class="data">
+                <caption>Status of each F-001 question. Source: <a class="inline-link" href="https://github.com/MNDe-System/mnde-public-test/blob/main/docs/F001-REASSESSMENT.md" rel="noopener">docs/F001-REASSESSMENT.md</a>.</caption>
+                <thead>
+                  <tr><th scope="col">#</th><th scope="col">Question</th><th scope="col">Status</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td class="mono">1</td><td>Can an authorization be used more than once?</td><td><span class="badge badge-limited">Established on the proven backend</span></td></tr>
+                  <tr><td class="mono">2</td><td>Can the effect happen before the durable claim?</td><td><span class="badge badge-implemented">Established</span></td></tr>
+                  <tr><td class="mono">3</td><td>Can the effect happen without consuming the claim?</td><td><span class="badge badge-implemented">Established</span></td></tr>
+                  <tr><td class="mono">4</td><td>Can the same grant execute after restart?</td><td><span class="badge badge-limited">Restart covered; power loss is a known limitation</span></td></tr>
+                  <tr><td class="mono">5</td><td>Can an ambiguous transport failure cause a blind second push?</td><td><span class="badge badge-implemented">Established</span></td></tr>
+                  <tr><td class="mono">6</td><td>Can an old datastore restore revive consumed authority?</td><td><span class="badge badge-unproven">Open by decision</span></td></tr>
+                  <tr><td class="mono">7</td><td>Can a caller substitute repository, branch, commits, executor or authorization?</td><td><span class="badge badge-implemented">Established</span></td></tr>
+                  <tr><td class="mono">8</td><td>Can the supported production path bypass the typed executor?</td><td><span class="badge badge-limited">Answered for MNDe’s own code</span></td></tr>
+                  <tr><td class="mono">9</td><td>Does the signed evidence match the observed remote state?</td><td><span class="badge badge-implemented">Established</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <section class="section section-muted">
+          <div class="container">
+            <div class="section-heading reveal">
+              <p class="eyebrow">Open, stated plainly</p>
+              <h2>Known limitations.</h2>
+            </div>
+            <div class="grid grid-2 reveal delay-1">
+              <article class="card card-open">
+                <h3>No production run yet</h3>
+                <p>The <code>git.push</code> path has not been operated end to end with production trust material against a production remote. That run is the blocker that moves F-001.</p>
+              </article>
+              <article class="card card-open">
+                <h3>Power loss</h3>
+                <p>A documented known limitation for v1.0, not a closed question. Restart recovery is tested; a disk that lies about flushing is not. Sustained power continuity in production is the operator's responsibility (UPS, generator) outside MNDe.</p>
+              </article>
+              <article class="card card-open">
+                <h3>Database restore</h3>
+                <p>The executor cannot roll its claim store back. A database owner can restore a backup and revive spent authority. Restore and admin authority must sit outside the automated system. An external monotonic witness is planned for after v1.0.</p>
+              </article>
+              <article class="card card-open">
+                <h3>Non-bypassability depends on deployment</h3>
+                <p>MNDe cannot stop an action that is never submitted to it. If another valid credential exists outside the executor, the boundary can be walked around. The repository host's permissions must make the executor the only path.</p>
+              </article>
+              <article class="card card-open">
+                <h3>Repository settings are not offline-verifiable</h3>
+                <p>Branch protection and required reviews live in GitHub settings, outside MNDe. MNDe does not produce a receipt for them and does not claim to verify them offline.</p>
+              </article>
+              <article class="card card-open">
+                <h3>No published authority bundle</h3>
+                <p>Offline verification works against a trust anchor today, but a stable, MNDe-published authority bundle for verification outside the repository does not exist yet.</p>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="container">
+            <div class="section-heading reveal">
+              <p class="eyebrow">What we will not say</p>
+              <h2>Claims this site is built to avoid.</h2>
+            </div>
+            <ul class="never-list reveal delay-1">
+              <li><span>“F-001 is closed.”</span> Not yet, and not for effects other than <code>git.push</code> on this evidence.</li>
+              <li><span>“Nobody can roll the claim store back.”</span> Only the executor cannot.</li>
+              <li><span>“ALLOW means it ran.”</span> A decision never implies execution occurred or is permitted.</li>
+              <li><span>“MNDe verifies your GitHub settings offline.”</span> It does not.</li>
+              <li><span>“Production verified.”</span> Reserved, and currently unused anywhere on this site.</li>
+            </ul>
+            <div class="cluster mt-2 reveal delay-2">
+              <a class="button button-primary" href="contact.html" data-track-group="cta" data-track-label="Request a technical pilot">Request a technical pilot</a>
+              <a class="button button-secondary" href="https://github.com/MNDe-System/mnde-public-test/blob/main/docs/KNOWN-ISSUES.md" rel="noopener">Read the known-issues record</a>
+            </div>
+          </div>
+        </section>
+      </main>
+      <footer class="site-footer" data-include="footer"></footer>
+    </div>
+  </body>
+</html>

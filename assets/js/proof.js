@@ -144,7 +144,8 @@
         prevented_cost: d.prevented_cost,
         reason_codes: d.reason_codes,
         inputs: d.inputs,
-        signature: "ES256:" + d.decision_hash.slice(0, 32)
+        signature: null,
+        signature_note: "Unsigned. This demonstration endpoint hashes decisions but does not sign them."
       };
       field.value = JSON.stringify(sample, null, 2);
       var pre = document.getElementById("sample-json");
