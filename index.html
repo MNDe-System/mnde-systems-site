@@ -5,18 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="MNDe is machine-authorization infrastructure. No consequential machine action executes unless it presents valid, specific, unconsumed authority for that exact action."
+      content="MNDe is an execution boundary for machine actions. An agent proposes an action; MNDe decides allow, refuse, or review; the action runs only with valid authority — with verifiable evidence."
     />
-    <meta name="theme-color" content="#111416" />
-    <meta property="og:title" content="MNDe — Authority before execution" />
+    <meta property="og:title" content="MNDe — Authorization before execution" />
     <meta
       property="og:description"
-      content="Machine-authorization infrastructure: exact-action grants, protected execution, credential dispossession, and linked, offline-verifiable evidence."
+      content="Control what AI agents are allowed to execute. Authorization before execution, protected execution paths, and cryptographically verifiable evidence."
     />
     <meta property="og:type" content="website" />
-    <meta name="theme-color" content="#05070d" />
+    <meta name="theme-color" content="#0a0c11" />
     <link rel="canonical" href="https://mndesystems.com/" />
-    <title>MNDe | Stop execution before it happens</title>
+    <title>MNDe — Authorization before execution</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -52,12 +51,18 @@
         <section class="hero" id="top">
           <div class="container">
             <div class="reveal">
-              <p class="eyebrow">Machine-authorization infrastructure</p>
-              <h1>Stop execution before it happens.</h1>
+              <p class="eyebrow">Controlled execution for machine actions</p>
+              <h1>Authorization before execution.</h1>
               <p class="lead">
-                MNDe is an execution boundary. A request is validated, a deterministic decision is
-                made, and the action executes or is refused — before any cost is incurred.
+                MNDe is an execution boundary for AI agents and automated systems. An agent proposes
+                an action; MNDe decides <strong>allow</strong>, <strong>refuse</strong>, or
+                <strong>review</strong>; and the action runs only when valid authority exists — leaving
+                cryptographically verifiable evidence of exactly what was authorized and what executed.
               </p>
+              <div class="cluster mt-2">
+                <a class="button button-primary" href="contact.html" data-track-group="cta" data-track-label="Request a technical pilot">Request a technical pilot</a>
+                <a class="button button-secondary" href="how-it-works.html" data-track-group="cta" data-track-label="Read the technical overview">How it works</a>
+              </div>
             </div>
 
             <div class="flow reveal delay-1" role="list" aria-label="Authorization chain">
@@ -99,16 +104,11 @@
                 <p class="muted">Adjust the request. The decision is computed server-side and returns signed hashes — the same input always returns the same result.</p>
               </div>
               <div class="sim" data-sim data-gpu="8" data-hours="4" data-retries="1" data-cost="30" data-variant="full"></div>
-              <ul class="proof-signals" aria-label="Proof signals">
-                <li><strong>0 drift</strong><span>across 1000 runs</span></li>
-                <li><strong>Cross-runtime parity</strong><span>verified</span></li>
+              <ul class="proof-signals" aria-label="What this demonstrates">
+                <li><strong>Deterministic by construction</strong><span>Identical input returns an identical signed result — <a class="inline-link" href="proof.html">verify it live</a>.</span></li>
+                <li><strong>Verifiable evidence</strong><span>ECDSA P-256 / SHA-256 receipts, checkable offline.</span></li>
+                <li><strong>Honestly scoped</strong><span>Components are labeled implemented, limited, or target.</span></li>
               </ul>
-            </div>
-
-            <div class="cluster mt-2 reveal delay-2">
-              <a class="button button-primary" href="contact.html" data-track-group="cta" data-track-label="Request a technical pilot">Request a technical pilot</a>
-              <a class="button button-secondary" href="proof.html" data-track-group="cta" data-track-label="See the proof">See the proof</a>
-              <a class="button button-secondary" href="#architecture">Inspect the architecture</a>
             </div>
 
             <p class="disclaimer reveal delay-2">
@@ -433,8 +433,53 @@
           </div>
         </section>
 
+        <!-- Hardware: MNDe Hub (coming soon) -->
+        <section class="section section-muted" id="hardware">
+          <div class="container">
+            <div class="hw">
+              <div class="hw-copy reveal">
+                <span class="hw-status">Hardware · Coming soon</span>
+                <h2>A dedicated control point, in hardware.</h2>
+                <p class="lead">
+                  The MNDe Hub is a physical control point for MNDe protected execution — the executor
+                  identity and credential boundary, kept separate from the agents that request work.
+                </p>
+                <ul class="hw-points">
+                  <li><strong>Isolated executor identity.</strong> The credential boundary is intended to live on the device, not in agent-reachable memory.</li>
+                  <li><strong>Protected execution path.</strong> Actions reach external systems only after a valid, single-use grant is consumed.</li>
+                  <li><strong>Evidence at the edge.</strong> Signed authorization and execution receipts, verifiable offline against published keys.</li>
+                </ul>
+                <p class="hw-note">
+                  Not available for purchase, and specifications are not final. If a hardware control
+                  point is relevant to your deployment, <a class="inline-link" href="contact.html">tell us what you need</a>.
+                </p>
+              </div>
+              <div class="hw-visual reveal delay-1" role="img" aria-label="Representative wireframe outline of the MNDe Hub — not final hardware">
+                <svg viewBox="0 0 400 240" fill="none" aria-hidden="true">
+                  <rect x="24" y="52" width="352" height="136" rx="10" stroke="currentColor" stroke-width="1.5" stroke-opacity="0.75"/>
+                  <rect x="24" y="52" width="352" height="136" rx="10" stroke="currentColor" stroke-width="10" stroke-opacity="0.06"/>
+                  <line x1="104" y1="52" x2="104" y2="188" stroke="currentColor" stroke-width="1" stroke-opacity="0.3"/>
+                  <polygon points="48,104 64,104 72,120 64,136 48,136 40,120" stroke="currentColor" stroke-width="1.5" stroke-opacity="0.85" fill="none"/>
+                  <circle cx="56" cy="120" r="2.5" fill="currentColor" fill-opacity="0.9"/>
+                  <line x1="126" y1="86" x2="356" y2="86" stroke="currentColor" stroke-width="1" stroke-opacity="0.18" stroke-dasharray="2 5"/>
+                  <line x1="126" y1="120" x2="356" y2="120" stroke="currentColor" stroke-width="1" stroke-opacity="0.18" stroke-dasharray="2 5"/>
+                  <line x1="126" y1="154" x2="356" y2="154" stroke="currentColor" stroke-width="1" stroke-opacity="0.18" stroke-dasharray="2 5"/>
+                  <g stroke="currentColor" stroke-width="1.25" stroke-opacity="0.5">
+                    <rect x="300" y="150" width="20" height="14" rx="2"/>
+                    <rect x="326" y="150" width="20" height="14" rx="2"/>
+                    <rect x="300" y="78" width="46" height="10" rx="2"/>
+                  </g>
+                  <line x1="24" y1="206" x2="128" y2="206" stroke="currentColor" stroke-width="1" stroke-opacity="0.35"/>
+                  <line x1="140" y1="206" x2="150" y2="206" stroke="currentColor" stroke-width="1" stroke-opacity="0.2"/>
+                </svg>
+                <span class="hw-caption">Representative outline — not final hardware</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <!-- Integrations: GitHub protected merge -->
-        <section class="section section-muted" id="integrations">
+        <section class="section" id="integrations">
           <div class="container">
             <div class="section-heading reveal">
               <p class="eyebrow">Reference integration</p>

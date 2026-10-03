@@ -8,10 +8,25 @@ const navItems = [
   { id: "product", label: "Product", href: "product.html" },
   { id: "how", label: "How it works", href: "how-it-works.html" },
   { id: "proof", label: "Proof", href: "proof.html" },
-  { id: "examples", label: "Examples", href: "examples.html" },
+  { id: "hardware", label: "Hardware", href: "index.html#hardware" },
   { id: "blog", label: "Blog", href: "blog.html" },
-  { id: "faq", label: "FAQ", href: "faq.html" },
   { id: "contact", label: "Contact", href: "contact.html" }
+];
+
+// Footer carries the full map, including secondary pages kept out of the lean header.
+const footerSections = [
+  { title: "Product", links: [
+    { label: "Overview", href: "product.html" },
+    { label: "How it works", href: "how-it-works.html" },
+    { label: "Proof", href: "proof.html" },
+    { label: "Examples", href: "examples.html" },
+    { label: "Hardware", href: "index.html#hardware" }
+  ] },
+  { title: "Resources", links: [
+    { label: "Blog", href: "blog.html" },
+    { label: "FAQ", href: "faq.html" },
+    { label: "Contact", href: "contact.html" }
+  ] }
 ];
 
 const CONTACT_EMAIL = "contact@mndesystems.com";
@@ -69,7 +84,7 @@ function renderHeader() {
         <img class="brand-logo" src="${basePath}assets/img/mnde-mark.svg" width="64" height="40" alt="" aria-hidden="true" />
         <span class="brand-text">
           <strong>MNDe</strong>
-          <span>Machine-authorization infrastructure</span>
+          <span>Controlled machine execution</span>
         </span>
       </a>
       <div class="nav-cluster">
@@ -117,21 +132,26 @@ function renderFooter() {
   const basePath = getBasePath();
   const year = new Date().getFullYear();
 
-  const footerNav = navItems
-    .map((item) => `<a href="${basePath}${item.href}">${item.label}</a>`)
+  const columns = footerSections
+    .map((section) => {
+      const links = section.links
+        .map((item) => `<a href="${basePath}${item.href}">${item.label}</a>`)
+        .join("");
+      return `<div class="footer-col"><p class="footer-col-title">${section.title}</p>${links}</div>`;
+    })
     .join("");
 
   footer.innerHTML = `
     <div class="container footer-shell">
       <div class="footer-brand">
         <img class="footer-lockup" src="${basePath}assets/img/mnde-lockup.svg" width="700" height="210" alt="MNDe — Every execution. Verified." />
-        <span>Authority before execution. No consequential machine action executes without valid, specific, unconsumed authority for that exact action.</span>
+        <span>Authorization before execution. Consequential machine actions run only with valid, specific, single-use authority — with verifiable evidence of what happened.</span>
         <span class="footer-contact"><a href="mailto:${CONTACT_EMAIL}">${CONTACT_EMAIL}</a></span>
       </div>
-      <nav class="footer-nav" aria-label="Footer">${footerNav}</nav>
+      <nav class="footer-nav" aria-label="Footer">${columns}</nav>
     </div>
     <div class="container footer-legal">
-      <span>&copy; ${year} MNDe. Machine-authorization infrastructure.</span>
+      <span>&copy; ${year} MNDe Systems. Controlled execution for machine actions.</span>
     </div>
   `;
 }
