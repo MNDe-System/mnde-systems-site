@@ -19,7 +19,6 @@ const footerSections = [
     { label: "Overview", href: "product.html" },
     { label: "How it works", href: "how-it-works.html" },
     { label: "Proof", href: "proof.html" },
-    { label: "Examples", href: "examples.html" },
     { label: "Hardware", href: "index.html#hardware" }
   ] },
   { title: "Resources", links: [

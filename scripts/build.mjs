@@ -11,7 +11,6 @@ const entriesToCopy = [
   "blog",
   "blog.html",
   "contact.html",
-  "examples.html",
   "faq.html",
   "how-it-works.html",
   "index.html",

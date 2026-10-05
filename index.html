@@ -26,7 +26,6 @@
     <link rel="stylesheet" href="assets/css/site.css" />
     <script defer src="assets/js/analytics.js"></script>
     <script defer src="assets/js/api.js"></script>
-    <script defer src="assets/js/simulator.js"></script>
     <script defer src="assets/js/site.js"></script>
     <script defer src="assets/js/evidence-core.js"></script>
     <script defer src="assets/js/evidence-lab.js"></script>
@@ -95,20 +94,6 @@
                 <span class="flow-index">06</span><strong>Linked evidence</strong>
                 <span class="flow-role">Authorization + execution receipts</span>
               </div>
-            </div>
-
-            <div class="sim-panel reveal delay-2">
-              <div class="sim-panel-head">
-                <p class="eyebrow">Live decision · /api/simulate</p>
-                <h2>Would this execution be allowed?</h2>
-                <p class="muted">Adjust the request. The decision is computed server-side and returns signed hashes — the same input always returns the same result.</p>
-              </div>
-              <div class="sim" data-sim data-gpu="8" data-hours="4" data-retries="1" data-cost="30" data-variant="full"></div>
-              <ul class="proof-signals" aria-label="What this demonstrates">
-                <li><strong>Deterministic by construction</strong><span>Identical input returns an identical signed result — <a class="inline-link" href="proof.html">verify it live</a>.</span></li>
-                <li><strong>Verifiable evidence</strong><span>ECDSA P-256 / SHA-256 receipts, checkable offline.</span></li>
-                <li><strong>Honestly scoped</strong><span>Components are labeled implemented, limited, or target.</span></li>
-              </ul>
             </div>
 
             <p class="disclaimer reveal delay-2">
