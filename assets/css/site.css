@@ -1860,6 +1860,9 @@ h3 { font-size: 1.15rem; letter-spacing: -0.02em; }
   pointer-events: none;
 }
 .hw-visual svg { position: relative; width: 100%; max-width: 360px; height: auto; color: var(--cyan); }
+.hw-photo { padding: 0; min-height: 0; }
+.hw-photo::before { display: none; }
+.hw-photo img { display: block; width: 100%; height: auto; }
 .hw-caption { position: absolute; bottom: 0.9rem; left: 0; right: 0; text-align: center; font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
 
 @media (max-width: 560px) {
