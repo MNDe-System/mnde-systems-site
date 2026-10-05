@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="MNDe FAQ: how the execution boundary works, why decisions are deterministic, what the proof bundle contains, and how to run the live simulator — each answer links to a demo."
+      content="MNDe FAQ: how the execution boundary works, why decisions are deterministic, what the proof bundle contains, and how to verify it — each answer links to a demo."
     />
     <meta name="theme-color" content="#0a0c11" />
     <link rel="canonical" href="https://mndesystems.com/faq.html" />
@@ -64,7 +64,7 @@
           <div class="container reveal">
             <p class="eyebrow">FAQ</p>
             <h1>Direct answers.</h1>
-            <p class="lead">Each answer links to the live demo that proves it — a simulator, a proof test, or an example.</p>
+            <p class="lead">Each answer links to the live demo that proves it — a proof test or a diagram.</p>
           </div>
         </section>
 
@@ -89,7 +89,6 @@
                 <summary>Is the decision made in my browser?</summary>
                 <div class="faq-body">
                   <p>No. The browser only sends inputs and renders the response. Every ALLOW/REFUSE decision is computed server-side by <code>/api/simulate</code> and returned with a request and decision hash.</p>
-                  <p><a class="button button-secondary button-sm" href="examples.html">Try the live examples</a></p>
                 </div>
               </details>
               <details class="faq-item">

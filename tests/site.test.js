@@ -13,7 +13,7 @@ const indexHtml = read("index.html");
 const contactHtml = read("contact.html");
 
 test("primary navigation exposes the expected routes", () => {
-  ["Product", "How it works", "Proof", "Examples", "Blog", "FAQ", "Contact"].forEach((label) => {
+  ["Product", "How it works", "Proof", "Blog", "FAQ", "Contact"].forEach((label) => {
     assert.ok(siteJs.includes(`label: "${label}"`), `nav should include ${label}`);
   });
 });
